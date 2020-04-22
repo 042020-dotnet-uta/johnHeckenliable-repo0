@@ -6,28 +6,39 @@ namespace rpsProject
 {
     internal class Player
     {
+        public Player(string name)
+        {
+            this.playerName = name;
+        }
+
         //player name variable holder
-        String playerName;
+        private string playerName;
         public string Name
         {
             get { return playerName; }
         }
-        //player score variable holder
-        int playerScore;
-        public int Score
+
+        private int wins;
+        public int Wins
         {
-            get { return playerScore; }
-        }
-        public Player(string name)
-        {
-            this.playerName = name;
-            playerScore = 0;
+            get { return wins; }
+            private set { wins = value; }
         }
 
-        //method for increasing player's score
-        public void IncreaseScore()
+        private int losses;
+        public int Losses
         {
-            playerScore++;
+            get { return losses; }
+            private set { losses = value; }
+        }
+
+        public void IncrementWins()
+        {
+            Wins++;
+        }
+        public void IncrementLosses()
+        {
+            Losses++;
         }
     }
 }

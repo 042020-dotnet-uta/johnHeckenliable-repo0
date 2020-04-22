@@ -6,7 +6,7 @@ namespace rpsProject
 {
     internal class Round
     {
-        private Player winner;
+        private Player winner = null;
         public Player Winner
         {
             get { return winner; }
@@ -17,13 +17,13 @@ namespace rpsProject
         public Choice PLayerOnesChoice
         {
             get { return player1Choice; }
-            private set { player1Choice = value; }
+            set { player1Choice = value; }
         }
         private Choice player2Choice;
-        public Choice PlayrTwosChoice 
+        public Choice PlayerTwosChoice 
         {
             get { return player2Choice; }
-            private set { player2Choice = value; } 
+            set { player2Choice = value; } 
         }
     }
 }
