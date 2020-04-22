@@ -3,61 +3,61 @@
 //Ryan Shereda, JD Heckenliable, Michael Hall
 namespace rpsProject
 {
-    //create enumerated list for each possible choice
-    //{rock, paper, scissors}
-    public enum Choice
-    {
-        rock,
-        paper,
-        scissors
-    }
-
     class Program
     {
         //number tie count
-        int tieCount = 0;
+        private static int tieCount = 0;
         //round counter
-        int roundNumber = 1;
+        private static int roundNumber = 1;
 
         static void Main(string[] args)
         {
-            
             //create player 1 object
-            Player player1 = new Player();
+            Player player1;
             //create player 2 object
-            Player player2 = new Player();
+            Player player2;
 
-            MainGameplay(player1, player2);     
             //set player 1 name (readLine)
+            System.Console.WriteLine("Player 1, please input your name:");
+            player1 = new Player(Console.ReadLine());
             //set player 2 name (readLine)
+            System.Console.WriteLine("Player 2, please input your name:");
+            player2 = new Player(Console.ReadLine());
 
-            //repeat main gameplay method until one wins
-            //Do while loop {
-            //run main gameplay method
-            //} ends when one player has more than 2 points
+            //repeat main gameplay method until one wins - Do while loop
+            do
+            {
+                //run main gameplay method
+                MainGameplay(player1, player2);
+            } while ((player1.Score < 2) && (player2.Score < 2));    //ends when one player has 2 or more points
+
 
             //if player 1 score more than 2
-            //write to console "[player1] wins [player1.score]-[player2.score] with [tie count] ties"
-            //} else if player 2 score more than 2 {
-            //write to console "[player2] wins [player2.score]-[player1.score] with [tie count] ties"
-            //}
+            if (player1.Score >= 2) {
+                //write to console "[player1] wins [player1.score]-[player2.score] with [tie count] ties"
+                System.Console.WriteLine($"{player1.Name} wins {player1.Score}-{player2.Score} with {tieCount} tie(s).");
+            } else if (player2.Score >= 2) {   //} else if player 2 score more than 2 {
+                //write to console "[player2] wins [player2.score]-[player1.score] with [tie count] ties"
+                System.Console.WriteLine($"{player2.Name} wins {player2.Score}-{player1.Score} with {tieCount} tie(s).");
+            } else {
+                System.Console.WriteLine($" Player 1 score: {player1.Score}");
+                System.Console.WriteLine($" Player 2 score: {player2.Score}");
+                System.Console.WriteLine("Critical Failure");
+            }
         }
 
-        //main gameplay method(round # parameter){
-        public static void MainGameplay(Player player1, Player player2)
+        //main gameplay method(round # parameter)
+        private static void MainGameplay(Player player1, Player player2)
         {
-            Random rnd = new Random();
+            var rnd = new Random();
             //variable to hold winner
-            Player winner;
+            Player winner = null;
             //variable to hold player 1 choice
-            Choice player1Choice;
-            //variable to hold player 2 choice
-            Choice player2Choice;
-
             //player 1 gets random enum/number
-            player1Choice = (Choice)rnd.Next(0,3);
+            var player1Choice = (Choice)rnd.Next(0,3);
+            //variable to hold player 2 choice
             //player 2 gets random enum/number
-            player2Choice = (Choice)rnd.Next(0,3);
+            var player2Choice = (Choice)rnd.Next(0, 3);
 
             //if statement checking player 1's choice
             if (player1Choice == Choice.rock) {
@@ -65,71 +65,46 @@ namespace rpsProject
                 if (player2Choice == Choice.paper) {
                     //player 2 wins
                     winner = player2;
-                    //player2.score + 1;
                 } else if (player2Choice == Choice.scissors) {
                     //player 1 wins
                     winner = player1;
-                    //player1.score + 1;
                 }
             } else if (player1Choice == Choice.paper) {
                 //nested if statement checking player 2's choice
                 if (player2Choice == Choice.scissors) {
                     //player 2 wins
                     winner = player2;
-                    //player2.score + 1;
                 } else if (player2Choice == Choice.rock) {
                     //player 1 wins
                     winner = player1;
-                    //player1.score + 1;
                 }
             } else if (player1Choice == Choice.scissors) {
                 //nested if statement checking player 2's choice
                 if (player2Choice == Choice.rock) {
                     //player 2 wins
                     winner = player2;
-                    //player2.score + 1;
                 } else if (player2Choice == Choice.paper) {
                     //player 1 wins
                     winner = player1;
-                    //player1.score + 1;
                 }
             }
 
-            System.Console.WriteLine($"player1Choice: {player1Choice}");
-            System.Console.WriteLine($"player2Choice: {player2Choice}");
             //check winner ([IF] there is a tie)
-            // if(winner == null) {
-            //     //write there was a tie
-            //     System.Console.WriteLine($"Round #: Player1 and Player2 had {player1Choice} -- No winner.");
+            if(player1Choice == player2Choice) {
+                //write there was a tie
+                System.Console.WriteLine($"Round {roundNumber}: {player1.Name} and {player2.Name} had {player1Choice} -- No winner.");
             
-            //     //increment tie counter
-            //     tieCount++;
-            // } else {        //[ELSE] a player won
-            //     //add score out here instead?
-                
-            //     //write results to console
-            //     //round # - [player1] had [value], [player2] had [value] - [winner] won
-            //     System.Console.WriteLine($"Round #: Player1 had {player1Choice}, Player2 had {player2Choice} -- {winner} wins.");            
-            // }
+                //increment tie counter
+                tieCount++;
+            } else {        //[ELSE] a player won
+                //Winner's score + 1
+                 winner.IncreaseScore();
 
+                //write results to console
+                //round # - [player1] had [value], [player2] had [value] - [winner] won
+                System.Console.WriteLine($"Round {roundNumber}: {player1.Name} had {player1Choice}, {player2.Name} had {player2Choice} -- {winner.Name} wins.");            
+            }
+            roundNumber++;
         }
-    }
-
-    //small struct to hold player names/scores {
-    public struct Player
-    {
-        //player name variable holder
-        public String playerName;
-        //player score variable holder
-        public int playerScore;
-
-        //because this is public, don't need getters/setters
-
-        //initialize player variables(name) method
-        //public void SetPlayerName(String setPlayerName)
-        //{
-        //    playerName = setPlayerName;
-        //}
-    }
-    
+    } 
 }
