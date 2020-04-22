@@ -8,8 +8,8 @@ namespace rpsProject
     //{rock, paper, scissors}
     internal enum Choice
     {
-        rock,
-        paper,
-        scissors
+        Rock,
+        Paper,
+        Scissors
     }
 }

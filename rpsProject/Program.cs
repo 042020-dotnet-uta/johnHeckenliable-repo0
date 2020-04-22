@@ -15,13 +15,13 @@ namespace rpsProject
             //create player 1 object
             Player player1;
             //create player 2 object
-            Player player2;
+            Player player2; 
 
             //set player 1 name (readLine)
-            System.Console.WriteLine("Player 1, please input your name:");
+            System.Console.Write("Player 1, please input your name:");
             player1 = new Player(Console.ReadLine());
             //set player 2 name (readLine)
-            System.Console.WriteLine("Player 2, please input your name:");
+            System.Console.Write("Player 2, please input your name:");
             player2 = new Player(Console.ReadLine());
 
             //repeat main gameplay method until one wins - Do while loop
@@ -30,7 +30,6 @@ namespace rpsProject
                 //run main gameplay method
                 MainGameplay(player1, player2);
             } while ((player1.Score < 2) && (player2.Score < 2));    //ends when one player has 2 or more points
-
 
             //if player 1 score more than 2
             if (player1.Score >= 2) {
@@ -60,30 +59,30 @@ namespace rpsProject
             var player2Choice = (Choice)rnd.Next(0, 3);
 
             //if statement checking player 1's choice
-            if (player1Choice == Choice.rock) {
+            if (player1Choice == Choice.Rock) {
                 //nested if statement checking player 2's choice
-                if (player2Choice == Choice.paper) {
+                if (player2Choice == Choice.Paper) {
                     //player 2 wins
                     winner = player2;
-                } else if (player2Choice == Choice.scissors) {
+                } else if (player2Choice == Choice.Scissors) {
                     //player 1 wins
                     winner = player1;
                 }
-            } else if (player1Choice == Choice.paper) {
+            } else if (player1Choice == Choice.Paper) {
                 //nested if statement checking player 2's choice
-                if (player2Choice == Choice.scissors) {
+                if (player2Choice == Choice.Scissors) {
                     //player 2 wins
                     winner = player2;
-                } else if (player2Choice == Choice.rock) {
+                } else if (player2Choice == Choice.Rock) {
                     //player 1 wins
                     winner = player1;
                 }
-            } else if (player1Choice == Choice.scissors) {
+            } else if (player1Choice == Choice.Scissors) {
                 //nested if statement checking player 2's choice
-                if (player2Choice == Choice.rock) {
+                if (player2Choice == Choice.Rock) {
                     //player 2 wins
                     winner = player2;
-                } else if (player2Choice == Choice.paper) {
+                } else if (player2Choice == Choice.Paper) {
                     //player 1 wins
                     winner = player1;
                 }
