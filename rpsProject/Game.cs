@@ -14,7 +14,6 @@ namespace rpsProject
             set { rounds = value; }
         }
 
-
         private Player p1;
         public Player PlayerOne
         {
