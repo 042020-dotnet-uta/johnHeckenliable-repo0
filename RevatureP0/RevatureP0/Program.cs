@@ -6,7 +6,7 @@ namespace RevatureP0
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }
