@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,8 +7,14 @@ namespace rpsProject
 {
     class Game
     {
-        private List<Round> rounds = new List<Round>();
+        //install the logger for a console app.
+        private readonly ILogger _logger;
+        public Game(ILogger<Game> logger)
+        {
+            _logger = logger;
+        }
 
+        private List<Round> rounds = new List<Round>();
         public List<Round> Rounds
         {
             get { return rounds; }
@@ -16,7 +23,7 @@ namespace rpsProject
 
         private Player p1;
         public Player PlayerOne
-        {
+        {            
             get { return p1; }
             private set { p1 = value; }
         }
@@ -30,12 +37,17 @@ namespace rpsProject
 
         internal void StartGame()
         {
+            _logger.LogInformation("Game Starting!");
+
             //Set up the players info
             GetPlayerNames();
             var p1Score = 0;
             var p2Score = 0;
             do
             {
+                Console.WriteLine();
+                _logger.LogInformation($"Round {rounds.Count + 1} Starting!");
+
                 //run main gameplay method
                 var round = PlayRound();
 
@@ -47,12 +59,18 @@ namespace rpsProject
                 rounds.Add(round);
                 //Display round info
                 DisplayRoundInfo(round);
+                _logger.LogInformation($"Round {rounds.Count} Ended!");
+
             } while ((p1Score < 2) && (p2Score < 2));
 
             DisplayResults(p1Score, p2Score);
+            EndGame(p1Score >= 2 ? p1 : p2);
+            _logger.LogInformation($"Game Ended!");
         }
         private void GetPlayerNames()
         {
+            _logger.LogInformation($"Getting player names!");
+
             //set player 1 name (readLine)
             System.Console.Write("Player 1, please input your name:");
             PlayerOne = new Player(Console.ReadLine());
@@ -63,10 +81,7 @@ namespace rpsProject
         private Round PlayRound()
         {
             var round = new Round();
-
-            var rnd = new Random();
-            round.PLayerOnesChoice = (Choice)rnd.Next(3);
-            round.PlayerTwosChoice = (Choice)rnd.Next(3);
+            AssignPlayerChoices(round);
 
             //Algorithm and switch statements taken from Ash, Kuang, ??? demo code
             var win = round.PLayerOnesChoice - round.PlayerTwosChoice + 2;
@@ -86,6 +101,29 @@ namespace rpsProject
                     break;
             }
             return round;
+        }
+
+        private void AssignPlayerChoices(Round round)
+        {
+            _logger.LogInformation($"Assigning player choices");
+
+            var rnd = new Random();
+            round.PLayerOnesChoice = (Choice)rnd.Next(3);
+            round.PlayerTwosChoice = (Choice)rnd.Next(3);
+        }
+
+        private void EndGame(Player winner)
+        {
+            if (winner == p1)
+            {
+                p1.IncrementWins();
+                p2.IncrementLosses();
+            }
+            else
+            {
+                p2.IncrementWins();
+                p1.IncrementLosses();
+            }
         }
 
         private void DisplayResults(int p1Score, int p2Score)

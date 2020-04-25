@@ -12,7 +12,7 @@ namespace rpsProject
         }
 
         //player name variable holder
-        private string playerName;
+        private readonly string playerName;
         public string Name
         {
             get { return playerName; }
