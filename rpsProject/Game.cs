@@ -83,7 +83,7 @@ namespace rpsProject
             var round = new Round();
             AssignPlayerChoices(round);
 
-            //Algorithm and switch statements taken from Ash, Kuang, ??? demo code
+            //Algorithm and switch statements taken from Ash, Kuang, Dave demo code
             var win = round.PLayerOnesChoice - round.PlayerTwosChoice + 2;
 
             //Switch statement refactored to eliminate redundant code
