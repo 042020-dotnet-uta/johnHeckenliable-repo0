@@ -35,8 +35,8 @@ namespace RevatureP0
             //set { orderDateTime = value; }
         }
 
-		private Dictionary<int, int> products;
-		public Dictionary<int, int> Products
+		private Dictionary<Product, int> products;
+		public Dictionary<Product, int> Products
 		{
 			get { return products; }
 		}

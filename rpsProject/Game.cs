@@ -85,7 +85,6 @@ namespace rpsProject
 
             //Algorithm and switch statements taken from Ash, Kuang, Dave demo code
             var win = round.PLayerOnesChoice - round.PlayerTwosChoice + 2;
-
             //Switch statement refactored to eliminate redundant code
             switch (win)
             {

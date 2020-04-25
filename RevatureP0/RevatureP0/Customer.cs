@@ -41,6 +41,10 @@ namespace RevatureP0
 		{
 			//Load existing costomer data???
 		}
+		internal Customer(string name)
+		{
+			
+		}
         #endregion
 
         #region Methods

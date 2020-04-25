@@ -5,22 +5,29 @@ namespace RevatureP0
     class Program
     {
         const string _EXIT = "EXIT";
+        private static Controller controller;
         static void Main(string[] args)
         {
+            controller = new Controller();
             //Welcome the user
             Console.WriteLine("***Welcome to THE store***");
             //Ask the user to 1. Log in 2. create an account
             var selection = GetUserLoginSelction();
-
-                //1. verify the account
-                //2. Create the user
-                //prompt user if there is an issue with account/creation
-                //Go back to log in or creation???
+            ProcessUserLogin(selection);
+            //1. verify the account
+            //2. Create the user
+            //prompt user if there is an issue with account/creation
+            //Go back to log in or creation???
 
             //Ask the user to select a store location (menu of n choices)
+            selection = GetStoreSelection();
+            var store = ProcessStoreSelection(selection);
 
             //Create a menu of options for that store
             //1. View available products
+            selection = GetAvailableProducts(store);
+            
+
             //2. Add product to "cart"
             //Verify availablity/correctness
             //prompt user of either sucess or reason for failure
@@ -30,6 +37,78 @@ namespace RevatureP0
             //4. Return to store selction menu
 
             //Allow for "Exit" to close program at any time???
+        }
+
+        private static int GetAvailableProducts(Store store)
+        {
+            var selection = 0;
+            var i = 1;
+            foreach (var product in store.AvailableProducts)
+            {
+                Console.WriteLine($"{i}. {product.Key.ProductDescription}, Quantity {product.Value}");
+                i++;
+            }
+
+            do
+            {
+                Console.Write("Select store number to start shopping. ");
+
+                int.TryParse(ProcessInput(), out selection);
+            } while (!(selection > 0 && selection < store.AvailableProducts.Count));
+
+            return selection;
+        }
+
+        private static Store ProcessStoreSelection(int selection)
+        {
+            return controller.GetStoreInfo(selection);
+        }
+
+        private static int GetStoreSelection()
+        {
+            var selection = 0;
+
+            //Get list of stores
+            var stores = controller.GetStoreList();
+
+            for (int i = 0; i < stores.Length; i++)
+            {
+                Console.WriteLine("{0}. {1}", i+1, stores[i]);
+            }
+            do
+            {
+                Console.Write("Select store number to start shopping. ");
+
+                int.TryParse(ProcessInput(), out selection);
+            } while (!(selection >0 && selection < stores.Length));
+
+            return selection;
+        }
+
+        private static void ProcessUserLogin(int selection)
+        {
+            if(selection == 1)
+            {
+                LoginUser();
+            }
+            else
+            {
+                Console.WriteLine("User Account Creation.");
+            }
+        }
+        private static void LoginUser()
+        {
+            Console.Write("Enter user name: ");
+            var userName = ProcessInput();
+        }
+        private static void RegisterUser()
+        {
+            Console.Write("Enter first name: ");
+            var firstName = ProcessInput();
+            Console.Write("Enter last name: ");
+            var lastName = ProcessInput();
+            Console.Write("Enter phone number: ");
+            var phoneNumber = ProcessInput();
         }
 
         private static int GetUserLoginSelction()

@@ -20,8 +20,8 @@ namespace RevatureP0
             set { location = value; }
         }
 
-        private Dictionary<int, int> availableProducts;
-        public Dictionary<int, int> AvailableProducts
+        private Dictionary<Product, int> availableProducts;
+        public Dictionary<Product, int> AvailableProducts
         {
             get { return availableProducts; }
         }
@@ -31,9 +31,10 @@ namespace RevatureP0
         public Store()
         {
             //Create StoreID???
+            availableProducts = new Dictionary<Product, int>();
         }
-        public Store(int storeID, string location)
-        {
+        public Store(int storeID, string location) : this()
+        { 
             this.storeID = storeID;
             this.location = location;
 
