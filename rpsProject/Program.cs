@@ -20,14 +20,9 @@ namespace rpsProject
 
             using ServiceProvider serviceProvider = services.BuildServiceProvider();
             //{
-                Game game = serviceProvider.GetService<Game>();
+                GamePlay game = serviceProvider.GetService<GamePlay>();
                 game.StartGame();
-
-                //game.GetPlayersName();
-                //game.RunGame();
-                //game.PrintResults();
             //}
-            // new Game().StartGame();
         }
         private static void ConfigureServices(ServiceCollection services)
         {
@@ -36,7 +31,7 @@ namespace rpsProject
                 configure.AddConsole();
                 
             })
-            .AddTransient<Game>();
+            .AddTransient<GamePlay>();
         }
     }
 }
