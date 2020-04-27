@@ -18,15 +18,15 @@ namespace rpsProject
             var services = new ServiceCollection();
             ConfigureServices(services);
 
-            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-            {
+            using ServiceProvider serviceProvider = services.BuildServiceProvider();
+            //{
                 Game game = serviceProvider.GetService<Game>();
                 game.StartGame();
 
                 //game.GetPlayersName();
                 //game.RunGame();
                 //game.PrintResults();
-            }
+            //}
             // new Game().StartGame();
         }
         private static void ConfigureServices(ServiceCollection services)
