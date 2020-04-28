@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace P0DatabaseApi
 {
-    internal class Customer
+    public class Customer
     {
 		#region Properties
+		[Key]
 		public int CustomerId { get; set; }
 
 		private string firstName;

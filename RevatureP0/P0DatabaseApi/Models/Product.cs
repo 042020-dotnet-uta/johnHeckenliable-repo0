@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace P0DatabaseApi
 {
-    internal class Product
+    public class Product
     {
         #region Properties
+        [Key]
         public int PoductId { get; set; }
 
         private string productDesc;

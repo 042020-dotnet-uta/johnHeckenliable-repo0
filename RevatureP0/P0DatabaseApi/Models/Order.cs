@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace P0DatabaseApi
 {
-    internal class Order
+    public class Order
     {
 		#region Properties
+		[Key]
 		public int OrderId { get; set; }
 
-		private int customerID;
-		public int CustomerID
-		{
-			get { return customerID; }
-			set { customerID = value; }
-		}
+		public int CusomerId { get; set; }
 
-		private int storeID;
-		public int StoreID
-		{
-			get { return storeID; }
-			set { storeID = value; }
-		}
+		public int StoreId { get; set; }
 
 		private DateTime orderDateTime;
 		public DateTime OrderDateTime
