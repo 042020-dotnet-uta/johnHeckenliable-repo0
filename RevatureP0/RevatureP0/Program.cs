@@ -5,10 +5,10 @@ namespace RevatureP0
     class Program
     {
         const string _EXIT = "EXIT";
-        private static Controller controller;
+        private static StoreApp controller;
         static void Main(string[] args)
         {
-            controller = new Controller();
+            controller = new StoreApp();
             //Welcome the user
             Console.WriteLine("***Welcome to THE store***");
             //Ask the user to 1. Log in 2. create an account
@@ -45,7 +45,7 @@ namespace RevatureP0
             var i = 1;
             foreach (var product in store.AvailableProducts)
             {
-                Console.WriteLine($"{i}. {product.Key.ProductDescription}, Quantity {product.Value}");
+                //Console.WriteLine($"{i}. {product.Key.ProductDescription}, Quantity {product.Value}");
                 i++;
             }
 
@@ -61,7 +61,8 @@ namespace RevatureP0
 
         private static Store ProcessStoreSelection(int selection)
         {
-            return controller.GetStoreInfo(selection);
+            //return controller.GetStoreInfo(selection);
+            return null;
         }
 
         private static int GetStoreSelection()

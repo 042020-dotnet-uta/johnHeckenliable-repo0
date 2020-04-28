@@ -6,9 +6,8 @@ namespace RevatureP0
 {
     internal class Customer
     {
-        #region Properties
-        private int customerID;
-		public int CustomerID { get { return customerID; } }
+		#region Properties
+		public int CustomerId { get; set; }
 
 		private string firstName;
 		public string FirstName
@@ -34,24 +33,10 @@ namespace RevatureP0
 
         #region Constructors
 		internal Customer()
-		{
-			//Create a new ID for them???
-		}
-		internal Customer(int customerID)
-		{
-			//Load existing costomer data???
-		}
-		internal Customer(string name)
-		{
-			
-		}
+		{ }
         #endregion
 
         #region Methods
-		public string GetFullName()
-		{
-			return $"{FirstName} {LastName}";
-		}
         #endregion
     }
 }

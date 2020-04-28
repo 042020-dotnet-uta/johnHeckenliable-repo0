@@ -7,20 +7,16 @@ namespace RevatureP0
     internal class Product
     {
         #region Properties
-        private int productID;
-        public int ProductID
-        {
-            get { return productID; }
-            //set { productID = value; }
-        }
+        public int PoductId { get; set; }
+
         private string productDesc;
         public string ProductDescription
         {
             get { return productDesc; }
             set { productDesc = value; }
         }
-        private double price;
 
+        private double price;
         public double Price
         {
             get { return price; }
@@ -31,14 +27,7 @@ namespace RevatureP0
 
         #region Constructors
         internal Product()
-        {
-            //generate a productID???
-
-        }
-        internal Product(int productID)
-        {
-            this.productID = productID;
-        }
+        {  }
         #endregion
 
         #region Methods
