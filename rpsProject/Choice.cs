@@ -6,7 +6,7 @@ namespace rpsProject
 {
     //create enumerated list for each possible choice
     //{rock, paper, scissors}
-    internal enum Choice
+    public enum Choice
     {
         Rock,
         Paper,

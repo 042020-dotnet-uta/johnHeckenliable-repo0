@@ -4,8 +4,12 @@ using System.Text;
 
 namespace rpsProject
 {
-    internal class Round
+    public class Round
     {
+        public Round() { }
+
+        public int RoundId { get; set; }
+
         private Player winner = null;
         public Player Winner
         {

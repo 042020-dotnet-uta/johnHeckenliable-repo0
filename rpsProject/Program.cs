@@ -7,12 +7,6 @@ namespace rpsProject
 {
     class Program
     {
-        //number tie count
-        //private static int tieCount = 0;
-        //round counter
-        //private static int roundNumber = 1;
-
-            
         static void Main(string[] args)
         {
             var services = new ServiceCollection();
@@ -29,7 +23,7 @@ namespace rpsProject
             services.AddLogging((configure) =>
             {
                 configure.AddConsole();
-                
+                configure.SetMinimumLevel(LogLevel.Error);
             })
             .AddTransient<GamePlay>();
         }

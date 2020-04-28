@@ -5,8 +5,16 @@ using System.Text;
 
 namespace rpsProject
 {
-    class Game
+    public class Game
     {
+        public Game() { }
+        public Game (Player p1, Player p2)
+        {
+            this.PlayerOne = p1;
+            this.PlayerTwo = p2;
+        }
+
+        public int GameId { get; set; }
         private List<Round> rounds = new List<Round>();
         public List<Round> Rounds
         {

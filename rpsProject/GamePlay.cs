@@ -5,17 +5,22 @@ using System.Text;
 
 namespace rpsProject
 {
-    class GamePlay
+    public class GamePlay
     {
         //install the logger for a console app.
         private readonly ILogger _logger;
+
+        RPS_DbContextClass db = new RPS_DbContextClass();
+
         private Game _game;
+
+        public GamePlay() { }
         public GamePlay(ILogger<GamePlay> logger)
         {
             _logger = logger;
             _game = new Game();
         }
-
+                    
         internal void StartGame()
         {
             _logger.LogInformation("Game Starting!");
@@ -51,7 +56,7 @@ namespace rpsProject
         private void GetPlayerNames()
         {
             _logger.LogInformation($"Getting player names!");
-
+            
             //set player 1 name (readLine)
             System.Console.Write("Player 1, please input your name:");
             _game.PlayerOne = new Player(Console.ReadLine());

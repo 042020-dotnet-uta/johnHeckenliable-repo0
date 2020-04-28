@@ -4,12 +4,15 @@ using System.Text;
 
 namespace rpsProject
 {
-    internal class Player
+    public class Player
     {
+        public Player() { }
         public Player(string name)
         {
             this.playerName = name;
         }
+
+        public int PlayerId { get; set; }
 
         //player name variable holder
         private readonly string playerName;
