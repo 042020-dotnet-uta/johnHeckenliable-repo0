@@ -21,11 +21,11 @@ namespace RevatureP0
 
             //Ask the user to select a store location (menu of n choices)
             selection = GetStoreSelection();
-            var store = ProcessStoreSelection(selection);
+            //var store = ProcessStoreSelection(selection);
 
             //Create a menu of options for that store
             //1. View available products
-            selection = GetAvailableProducts(store);
+            //selection = GetAvailableProducts(store);
             
 
             //2. Add product to "cart"
@@ -39,31 +39,25 @@ namespace RevatureP0
             //Allow for "Exit" to close program at any time???
         }
 
-        private static int GetAvailableProducts(Store store)
-        {
-            var selection = 0;
-            var i = 1;
-            foreach (var product in store.AvailableProducts)
-            {
-                //Console.WriteLine($"{i}. {product.Key.ProductDescription}, Quantity {product.Value}");
-                i++;
-            }
+        //private static int GetAvailableProducts(Store store)
+        //{
+        //    var selection = 0;
+        //    var i = 1;
+        //    foreach (var product in store.AvailableProducts)
+        //    {
+        //        //Console.WriteLine($"{i}. {product.Key.ProductDescription}, Quantity {product.Value}");
+        //        i++;
+        //    }
 
-            do
-            {
-                Console.Write("Select store number to start shopping. ");
+        //    do
+        //    {
+        //        Console.Write("Select store number to start shopping. ");
 
-                int.TryParse(ProcessInput(), out selection);
-            } while (!(selection > 0 && selection < store.AvailableProducts.Count));
+        //        int.TryParse(ProcessInput(), out selection);
+        //    } while (!(selection > 0 && selection < store.AvailableProducts.Count));
 
-            return selection;
-        }
-
-        private static Store ProcessStoreSelection(int selection)
-        {
-            //return controller.GetStoreInfo(selection);
-            return null;
-        }
+        //    return selection;
+        //}
 
         private static int GetStoreSelection()
         {

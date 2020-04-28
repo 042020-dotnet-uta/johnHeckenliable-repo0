@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RevatureP0.Models
+namespace P0DatabaseApi
 {
     class OrderDetails
     {

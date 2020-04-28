@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RevatureP0
+namespace P0DatabaseApi
 {
     internal class Customer
     {
