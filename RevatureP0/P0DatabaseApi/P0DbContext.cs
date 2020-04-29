@@ -63,6 +63,8 @@ namespace P0DatabaseApi
             ListStoresAndInventories();
             Console.WriteLine("***************************");
             ListOrders();
+            Console.WriteLine("***************************");
+            ListOrdersWithDetails();
         }
 
         #region Test data creation
@@ -255,7 +257,7 @@ namespace P0DatabaseApi
         private void ListStoresAndInventories()
         {
             var stores = this.Stores;
-            foreach (var store in stores.Include(o=>o.AvailableProducts))
+            foreach (var store in stores.Include(o => o.AvailableProducts))
             {
                 if (store.AvailableProducts == null)
                 {
@@ -263,7 +265,7 @@ namespace P0DatabaseApi
                 }
                 else
                 {
-                    Console.WriteLine($"Store number {store.StoreId} located in {store.Location} has the following items.");
+                    Console.WriteLine($"Store number {store.StoreId} located in {store.Location} has the following items:");
                     //var productInvs = this.StoreInventories;
                     foreach (var productInv in store.AvailableProducts)
                     {
@@ -280,6 +282,30 @@ namespace P0DatabaseApi
             foreach (var order in orders)
             {
                 Console.WriteLine($"Order number {order.OrderId} happened at {order.OrderDateTime.ToShortDateString()} ");
+            }
+        }
+
+        private void ListOrdersWithDetails()
+        {
+            var orders = this.Orders.AsNoTracking();
+            foreach (var order in orders.Include(o => o.ProductsOrdered))
+            {
+                var customer = this.Customers.Find(order.CusomerId);
+                var store = this.Stores.Find(order.StoreId);
+
+                if (order.ProductsOrdered == null)
+                {
+                    Console.WriteLine($"Order number {order.OrderId} has no details");
+                }
+                else
+                {
+                    Console.WriteLine($"Order number {order.OrderId} Customer: {customer.FirstName + " " + customer.LastName} Store Location: {store.Location} included the following line items:");
+                    foreach (var item in order.ProductsOrdered)
+                    {
+                        var product = this.Products.Find(item.ProductId);
+                        Console.WriteLine($"{product.ProductDescription} - Quantity of {item.Quantity}");
+                    }
+                }
             }
         }
         #endregion
