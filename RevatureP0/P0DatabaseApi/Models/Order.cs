@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace P0DatabaseApi
@@ -11,8 +12,10 @@ namespace P0DatabaseApi
 		[Key]
 		public int OrderId { get; set; }
 
+		[ForeignKey("Customer")]
 		public int CusomerId { get; set; }
 
+		[ForeignKey("Store")]
 		public int StoreId { get; set; }
 
 		private DateTime orderDateTime;
@@ -22,14 +25,16 @@ namespace P0DatabaseApi
             set { orderDateTime = value; }
         }
 
-		private Dictionary<Product, int> products;
-		public Dictionary<Product, int> Products
+		private List<OrderDetails> orderDetails;
+		public List<OrderDetails> OrderDetails
 		{
-			get { return products; }
+			get { return orderDetails; }
+			set { orderDetails = value; }
 		}
-        #endregion
 
-        #region Constructors
+		#endregion
+
+		#region Constructors
 		internal Order()
 		{ }
         #endregion

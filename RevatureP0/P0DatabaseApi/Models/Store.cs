@@ -18,10 +18,11 @@ namespace P0DatabaseApi
             set { location = value; }
         }
 
-        private List<Product> availableProducts;
-        public List<Product> AvailableProducts
+        private List<Inventory> availableProducts;
+        public List<Inventory> AvailableProducts
         {
             get { return availableProducts; }
+            set { availableProducts = value; }
         }
         #endregion
 

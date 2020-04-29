@@ -1,4 +1,5 @@
 ﻿using System;
+using P0DatabaseApi;
 
 namespace RevatureP0
 {
@@ -11,16 +12,21 @@ namespace RevatureP0
             controller = new StoreApp();
             //Welcome the user
             Console.WriteLine("***Welcome to THE store***");
+
+            P0DbContext db = new P0DbContext();
+            Console.WriteLine("\nPress enter to fake some data...");
+            Console.ReadLine();
+            db.CreateSomeData();
+
             //Ask the user to 1. Log in 2. create an account
-            var selection = GetUserLoginSelction();
-            ProcessUserLogin(selection);
+            
             //1. verify the account
             //2. Create the user
             //prompt user if there is an issue with account/creation
             //Go back to log in or creation???
 
             //Ask the user to select a store location (menu of n choices)
-            selection = GetStoreSelection();
+            
             //var store = ProcessStoreSelection(selection);
 
             //Create a menu of options for that store

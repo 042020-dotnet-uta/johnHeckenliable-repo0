@@ -23,20 +23,6 @@ namespace P0DatabaseApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDetails",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    PricePaid = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDetails", x => new { x.ProductId, x.OrderId });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -52,16 +38,17 @@ namespace P0DatabaseApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StoreQuantities",
+                name: "Products",
                 columns: table => new
                 {
-                    StoreId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
+                    PoductId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductDescription = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StoreQuantities", x => new { x.ProductId, x.StoreId });
+                    table.PrimaryKey("PK_Products", x => x.PoductId);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,29 +65,64 @@ namespace P0DatabaseApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "OrderDetails",
                 columns: table => new
                 {
-                    PoductId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ProductDescription = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
-                    StoreId = table.Column<int>(nullable: true)
+                    OrderId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    PricePaid = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.PoductId);
+                    table.PrimaryKey("PK_OrderDetails", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK_Products_Stores_StoreId",
+                        name: "FK_OrderDetails_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StoreInventories",
+                columns: table => new
+                {
+                    StoreId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StoreInventories", x => new { x.ProductId, x.StoreId });
+                    table.ForeignKey(
+                        name: "FK_StoreInventories_Stores_StoreId",
                         column: x => x.StoreId,
                         principalTable: "Stores",
                         principalColumn: "StoreId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade); 
+                    table.ForeignKey(
+                         name: "FK_StoreInventories_Products_ProductId",
+                         column: x => x.ProductId,
+                         principalTable: "Products",
+                         principalColumn: "ProductId",
+                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_StoreId",
-                table: "Products",
+                name: "IX_OrderDetails_OrderId",
+                table: "OrderDetails",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StoreInventories_StoreId",
+                table: "StoreInventories",
                 column: "StoreId");
         }
 
@@ -113,13 +135,13 @@ namespace P0DatabaseApi.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "Orders");
-
-            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "StoreQuantities");
+                name: "StoreInventories");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Stores");

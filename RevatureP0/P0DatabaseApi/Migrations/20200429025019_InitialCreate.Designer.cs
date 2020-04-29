@@ -9,7 +9,7 @@ using P0DatabaseApi;
 namespace P0DatabaseApi.Migrations
 {
     [DbContext(typeof(P0DbContext))]
-    [Migration("20200428133906_InitialCreate")]
+    [Migration("20200429025019_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,24 @@ namespace P0DatabaseApi.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("P0DatabaseApi.Inventory", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductId", "StoreId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("StoreInventories");
                 });
 
             modelBuilder.Entity("P0DatabaseApi.Order", b =>
@@ -74,6 +92,8 @@ namespace P0DatabaseApi.Migrations
 
                     b.HasKey("ProductId", "OrderId");
 
+                    b.HasIndex("OrderId");
+
                     b.ToTable("OrderDetails");
                 });
 
@@ -89,12 +109,7 @@ namespace P0DatabaseApi.Migrations
                     b.Property<string>("ProductDescription")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("StoreId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("PoductId");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("Products");
                 });
@@ -113,27 +128,22 @@ namespace P0DatabaseApi.Migrations
                     b.ToTable("Stores");
                 });
 
-            modelBuilder.Entity("P0DatabaseApi.StoreQuantity", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StoreId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductId", "StoreId");
-
-                    b.ToTable("StoreQuantities");
-                });
-
-            modelBuilder.Entity("P0DatabaseApi.Product", b =>
+            modelBuilder.Entity("P0DatabaseApi.Inventory", b =>
                 {
                     b.HasOne("P0DatabaseApi.Store", null)
                         .WithMany("AvailableProducts")
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("P0DatabaseApi.OrderDetails", b =>
+                {
+                    b.HasOne("P0DatabaseApi.Order", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

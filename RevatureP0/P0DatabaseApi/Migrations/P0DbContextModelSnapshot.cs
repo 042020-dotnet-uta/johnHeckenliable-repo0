@@ -36,6 +36,24 @@ namespace P0DatabaseApi.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("P0DatabaseApi.Inventory", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProductId", "StoreId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("StoreInventories");
+                });
+
             modelBuilder.Entity("P0DatabaseApi.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -72,6 +90,8 @@ namespace P0DatabaseApi.Migrations
 
                     b.HasKey("ProductId", "OrderId");
 
+                    b.HasIndex("OrderId");
+
                     b.ToTable("OrderDetails");
                 });
 
@@ -87,12 +107,7 @@ namespace P0DatabaseApi.Migrations
                     b.Property<string>("ProductDescription")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("StoreId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("PoductId");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("Products");
                 });
@@ -111,27 +126,22 @@ namespace P0DatabaseApi.Migrations
                     b.ToTable("Stores");
                 });
 
-            modelBuilder.Entity("P0DatabaseApi.StoreQuantity", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StoreId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductId", "StoreId");
-
-                    b.ToTable("StoreQuantities");
-                });
-
-            modelBuilder.Entity("P0DatabaseApi.Product", b =>
+            modelBuilder.Entity("P0DatabaseApi.Inventory", b =>
                 {
                     b.HasOne("P0DatabaseApi.Store", null)
                         .WithMany("AvailableProducts")
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("P0DatabaseApi.OrderDetails", b =>
+                {
+                    b.HasOne("P0DatabaseApi.Order", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
