@@ -18,19 +18,9 @@ namespace P0DatabaseApi
 		[ForeignKey("Store")]
 		public int StoreId { get; set; }
 
-		private DateTime orderDateTime;
-		public DateTime OrderDateTime
-		{
-			get { return orderDateTime; }
-            set { orderDateTime = value; }
-        }
+		public DateTime OrderDateTime { get; set; }
 
-		private List<OrderDetails> orderDetails;
-		public List<OrderDetails> OrderDetails
-		{
-			get { return orderDetails; }
-			set { orderDetails = value; }
-		}
+		public List<OrderDetails> ProductsOrdered { get; set; }
 
 		#endregion
 

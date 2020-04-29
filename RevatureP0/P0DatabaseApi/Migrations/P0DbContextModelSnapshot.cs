@@ -138,7 +138,7 @@ namespace P0DatabaseApi.Migrations
             modelBuilder.Entity("P0DatabaseApi.OrderDetails", b =>
                 {
                     b.HasOne("P0DatabaseApi.Order", null)
-                        .WithMany("OrderDetails")
+                        .WithMany("ProductsOrdered")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

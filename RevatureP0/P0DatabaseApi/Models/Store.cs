@@ -11,19 +11,9 @@ namespace P0DatabaseApi
         [Key]
         public int StoreId { get; set; }
 
-        private string location;
-        public string Location
-        {
-            get { return location; }
-            set { location = value; }
-        }
+        public string Location { get; set; }
 
-        private List<Inventory> availableProducts;
-        public List<Inventory> AvailableProducts
-        {
-            get { return availableProducts; }
-            set { availableProducts = value; }
-        }
+        public List<Inventory> AvailableProducts { get; set; }
         #endregion
 
         #region Constructors

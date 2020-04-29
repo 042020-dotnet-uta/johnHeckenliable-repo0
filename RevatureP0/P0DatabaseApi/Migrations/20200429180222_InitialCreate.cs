@@ -82,12 +82,6 @@ namespace P0DatabaseApi.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,13 +100,7 @@ namespace P0DatabaseApi.Migrations
                         column: x => x.StoreId,
                         principalTable: "Stores",
                         principalColumn: "StoreId",
-                        onDelete: ReferentialAction.Cascade); 
-                    table.ForeignKey(
-                         name: "FK_StoreInventories_Products_ProductId",
-                         column: x => x.ProductId,
-                         principalTable: "Products",
-                         principalColumn: "ProductId",
-                         onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

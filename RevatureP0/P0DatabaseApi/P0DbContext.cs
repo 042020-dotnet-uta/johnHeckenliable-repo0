@@ -42,12 +42,30 @@ namespace P0DatabaseApi
 
         public void CreateSomeData()
         {
-            //CreateSomeStores();
-           //CreateSomeCustomers();
-            //CreateSomeProducts();
-
-            CreateStoreInventorys();
+            CreateSomeStores();
+            CreateSomeCustomers();
+            CreateSomeProducts();
+            CreateSomeStoreInventorys();
+            CreateSomeOrderes();
+            CreateSomeOrderDetails();
         }
+
+        public void QuerySomeData()
+        {
+            ListCustomers();
+            Console.WriteLine("***************************");
+            ListStores();
+            Console.WriteLine("***************************");
+            ListProducts();
+            Console.WriteLine("***************************");
+            ListInventories();
+            Console.WriteLine("***************************");
+            ListStoresAndInventories();
+            Console.WriteLine("***************************");
+            ListOrders();
+        }
+
+        #region Test data creation
         private void CreateSomeStores()
         {
             var store = new Store()
@@ -117,7 +135,7 @@ namespace P0DatabaseApi
             this.SaveChanges();
         }
 
-        private void CreateStoreInventorys()
+        private void CreateSomeStoreInventorys()
         {
             var storeInv = new Inventory()
             {
@@ -142,5 +160,128 @@ namespace P0DatabaseApi
             this.Add(storeInv);
             this.SaveChanges();
         }
+
+        private void CreateSomeOrderes()
+        {
+            var order = new Order()
+            {
+                CusomerId = 1,
+                StoreId = 1,
+                OrderDateTime = DateTime.Now
+            };
+            this.Add(order);
+            order = new Order()
+            {
+                CusomerId = 1,
+                StoreId = 2,
+                OrderDateTime = DateTime.Now
+            };
+            this.Add(order);
+            order = new Order()
+            {
+                CusomerId = 1,
+                StoreId = 3,
+                OrderDateTime = DateTime.Now
+            };
+            this.Add(order);
+            this.SaveChanges();
+        }
+
+        private void CreateSomeOrderDetails()
+        {
+            var orderDetail = new OrderDetails()
+            {
+                OrderId = 1,
+                PricePaid = 9.99,
+                ProductId = 1,
+                Quantity = 5
+            };
+            this.Add(orderDetail);
+            orderDetail = new OrderDetails()
+            {
+                OrderId = 1,
+                PricePaid = 19.99,
+                ProductId = 2,
+                Quantity = 3
+            };
+            this.Add(orderDetail);
+            orderDetail = new OrderDetails()
+            {
+                OrderId = 1,
+                PricePaid = 15.99,
+                ProductId = 3,
+                Quantity = 2
+            };
+            this.Add(orderDetail);
+            this.SaveChanges();
+        }
+        #endregion
+
+        #region Test data queries
+        private void ListCustomers()
+        {
+            var users = this.Customers.AsNoTracking();
+            foreach (var customer in users)
+            {
+                Console.WriteLine($"Customer {customer.FirstName} {customer.LastName} has ID {customer.CustomerId}");
+            }
+        }
+        private void ListStores()
+        {
+            var stores = this.Stores.AsNoTracking();
+            foreach (var store in stores)
+            {
+                Console.WriteLine($"Store number {store.StoreId} is located in {store.Location}.");
+            }
+        }
+        private void ListProducts()
+        {
+            var products = this.Products.AsNoTracking();
+            foreach (var product in products)
+            {
+                Console.WriteLine($"Product {product.ProductDescription} costs {product.Price}");
+            }
+        }
+
+        private void ListInventories()
+        {
+            var inventories = this.StoreInventories.AsNoTracking();
+            foreach (var inventory in inventories)
+            {
+                Console.WriteLine($"StoreID {inventory.StoreId} has {inventory.Quantity} of ProductID {inventory.ProductId}");
+            }
+        }
+
+        private void ListStoresAndInventories()
+        {
+            var stores = this.Stores;
+            foreach (var store in stores.Include(o=>o.AvailableProducts))
+            {
+                if (store.AvailableProducts == null)
+                {
+                    Console.WriteLine($"Store number {store.StoreId} located in {store.Location} has no available products");
+                }
+                else
+                {
+                    Console.WriteLine($"Store number {store.StoreId} located in {store.Location} has the following items.");
+                    //var productInvs = this.StoreInventories;
+                    foreach (var productInv in store.AvailableProducts)
+                    {
+                        var product = this.Products.Find(productInv.ProductId);
+                        Console.WriteLine($"{product.ProductDescription} - Quantity of {productInv.Quantity}");
+                    }
+                }
+            }
+        }
+
+        private void ListOrders()
+        {
+            var orders = this.Orders.AsNoTracking();
+            foreach (var order in orders)
+            {
+                Console.WriteLine($"Order number {order.OrderId} happened at {order.OrderDateTime.ToShortDateString()} ");
+            }
+        }
+        #endregion
     }
 }

@@ -11,19 +11,9 @@ namespace P0DatabaseApi
         [Key]
         public int PoductId { get; set; }
 
-        private string productDesc;
-        public string ProductDescription
-        {
-            get { return productDesc; }
-            set { productDesc = value; }
-        }
+        public string ProductDescription { get; set; }
 
-        private double price;
-        public double Price
-        {
-            get { return price; }
-            set { price = value; }
-        }
+        public double Price { get; set; }
 
         #endregion
 

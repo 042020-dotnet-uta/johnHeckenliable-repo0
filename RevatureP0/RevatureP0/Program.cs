@@ -16,7 +16,11 @@ namespace RevatureP0
             P0DbContext db = new P0DbContext();
             Console.WriteLine("\nPress enter to fake some data...");
             Console.ReadLine();
-            db.CreateSomeData();
+            //db.CreateSomeData();
+            Console.WriteLine("Test data created.");
+            Console.WriteLine("\nPress enter to run some queries...");
+            Console.ReadLine();
+            db.QuerySomeData();
 
             //Ask the user to 1. Log in 2. create an account
             
