@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace RevatureP0
+namespace P0DatabaseApi
 {
-    internal class Customer
+    public class Customer
     {
-        #region Properties
-        private int customerID;
-		public int CustomerID { get { return customerID; } }
+		#region Properties
+		[Key]
+		public int CustomerId { get; set; }
 
 		private string firstName;
 		public string FirstName
@@ -34,20 +35,10 @@ namespace RevatureP0
 
         #region Constructors
 		internal Customer()
-		{
-			//Create a new ID for them???
-		}
-		internal Customer(int customerID)
-		{
-			//Load existing costomer data???
-		}
+		{ }
         #endregion
 
         #region Methods
-		public string GetFullName()
-		{
-			return $"{FirstName} {LastName}";
-		}
         #endregion
     }
 }
