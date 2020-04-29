@@ -1,0 +1,12 @@
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\bin\Debug\netcoreapp3.1\P0DatabaseApi.deps.json
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\bin\Debug\netcoreapp3.1\P0DatabaseApi.runtimeconfig.json
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\bin\Debug\netcoreapp3.1\P0DatabaseApi.runtimeconfig.dev.json
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\bin\Debug\netcoreapp3.1\P0DatabaseApi.dll
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\bin\Debug\netcoreapp3.1\P0DatabaseApi.pdb
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\obj\Debug\netcoreapp3.1\P0DatabaseApi.csproj.CoreCompileInputs.cache
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\obj\Debug\netcoreapp3.1\P0DatabaseApi.AssemblyInfoInputs.cache
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\obj\Debug\netcoreapp3.1\P0DatabaseApi.AssemblyInfo.cs
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\obj\Debug\netcoreapp3.1\P0DatabaseApi.dll
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\obj\Debug\netcoreapp3.1\P0DatabaseApi.pdb
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\obj\Debug\netcoreapp3.1\P0DatabaseApi.genruntimeconfig.cache
+C:\Revature_Repo\johnHeckenliable-repo0\RevatureP0\P0DatabaseApi\obj\Debug\netcoreapp3.1\P0DatabaseApi.csprojAssemblyReference.cache
