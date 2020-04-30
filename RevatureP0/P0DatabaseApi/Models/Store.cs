@@ -18,7 +18,7 @@ namespace P0DatabaseApi
 
         #region Constructors
         public Store()
-        { }
+        { AvailableProducts = new List<Inventory>(); }
         #endregion
 
         #region Methods

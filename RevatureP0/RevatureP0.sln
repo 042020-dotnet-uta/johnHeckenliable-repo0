@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevatureP0", "RevatureP0\RevatureP0.csproj", "{C0FD174E-D0FC-4144-81D9-5C00B6987441}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P0DatabaseApi", "P0DatabaseApi\P0DatabaseApi.csproj", "{67149C62-3366-4CFD-A874-27BECC6349C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P0DatabaseApi", "P0DatabaseApi\P0DatabaseApi.csproj", "{67149C62-3366-4CFD-A874-27BECC6349C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseApi_Tests", "DatabaseApi_Tests\DatabaseApi_Tests.csproj", "{26C57940-371B-4038-A265-B4C0AB3DBD32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{67149C62-3366-4CFD-A874-27BECC6349C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67149C62-3366-4CFD-A874-27BECC6349C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67149C62-3366-4CFD-A874-27BECC6349C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26C57940-371B-4038-A265-B4C0AB3DBD32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C57940-371B-4038-A265-B4C0AB3DBD32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26C57940-371B-4038-A265-B4C0AB3DBD32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C57940-371B-4038-A265-B4C0AB3DBD32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
