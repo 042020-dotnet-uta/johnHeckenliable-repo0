@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace P0DatabaseApi
@@ -23,7 +25,8 @@ namespace P0DatabaseApi
         {
             //use this for SQLite
             if (!options.IsConfigured)
-                options.UseSqlite("Data Source=C:\\Revature_Repo\\p0_Data.db");
+                options.UseLazyLoadingProxies()
+                       .UseSqlite("Data Source=C:\\Revature_Repo\\p0_Data.db");
 
             //use this for localDb SSMS
             //if (!options.IsConfigured)
@@ -42,12 +45,14 @@ namespace P0DatabaseApi
 
         public void CreateSomeData()
         {
+            /*
             CreateSomeStores();
             CreateSomeCustomers();
             CreateSomeProducts();
             CreateSomeStoreInventorys();
             CreateSomeOrderes();
             CreateSomeOrderDetails();
+            */
         }
 
         public void QuerySomeData()
@@ -65,6 +70,57 @@ namespace P0DatabaseApi
             ListOrders();
             Console.WriteLine("***************************");
             ListOrdersWithDetails();
+        }
+
+        public void UpdatePhoneNumber(string fName, string lName, string newPNumber)
+        {
+            var customer = this.Customers.FirstOrDefault(c => c.FirstName == fName && c.LastName == lName);
+
+            Console.WriteLine($"Before Change - {customer.FirstName} {customer.LastName} phone number is {customer.PhoneNumber}");
+
+            customer.PhoneNumber = newPNumber;
+            this.SaveChanges();
+
+            var customer2 = this.Customers.FirstOrDefault(c => c.FirstName == fName && c.LastName == lName);
+
+            Console.WriteLine($"After Change - {customer2.FirstName} {customer2.LastName} phone number is {customer2.PhoneNumber}");
+        }
+        public void UpdateProductQuantity(int storeId, int productId, int quantityChange)
+        {
+            var store = this.Stores.FirstOrDefault(s => s.StoreId == storeId);
+            var inventory = store.AvailableProducts.Where(s => s.ProductId == productId).FirstOrDefault();
+
+            Console.WriteLine($"Before Change - {store.Location} has {inventory.Quantity} of product {productId}");
+
+            inventory.Quantity += quantityChange;
+            this.SaveChanges();
+
+            var store2 = this.Stores.FirstOrDefault(s => s.StoreId == storeId);
+            var inventory2 = store.AvailableProducts.FirstOrDefault(i => i.ProductId == productId);
+
+            Console.WriteLine($"Before Change - {store2.Location} has {inventory2.Quantity} of product {productId}");
+        }
+
+        public void CreateOrder(int storeId, int custId, Dictionary<int, int> productsQuantity)
+        {
+            var order = new Order()
+            {
+                CusomerId = custId,
+                StoreId = storeId,
+                OrderDateTime = DateTime.Now
+            };
+            foreach (var product in productsQuantity)
+            {
+                var details = new OrderDetails()
+                {
+                    ProductId = product.Key,
+                    Quantity = product.Value
+                };
+                order.ProductsOrdered.Add(details);
+                UpdateProductQuantity(storeId, product.Key, product.Value * -1);
+            }
+            this.Add(order);
+            this.SaveChanges();
         }
 
         #region Test data creation

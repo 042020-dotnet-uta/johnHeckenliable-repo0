@@ -13,7 +13,7 @@ namespace P0DatabaseApi
 
         public string Location { get; set; }
 
-        public List<Inventory> AvailableProducts { get; set; }
+        public virtual List<Inventory> AvailableProducts { get; set; }
         #endregion
 
         #region Constructors

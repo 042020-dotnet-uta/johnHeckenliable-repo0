@@ -18,7 +18,7 @@ namespace P0DatabaseApi
         #endregion
 
         #region Constructors
-        internal Product()
+        public Product()
         {  }
         #endregion
 

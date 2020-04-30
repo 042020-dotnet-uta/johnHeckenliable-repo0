@@ -16,5 +16,7 @@ namespace P0DatabaseApi
 
         public int Quantity { get; set; }
         public double PricePaid { get; set; }
+
+        public OrderDetails() { }
     }
 }

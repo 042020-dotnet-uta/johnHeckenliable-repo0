@@ -9,8 +9,8 @@ using P0DatabaseApi;
 namespace P0DatabaseApi.Migrations
 {
     [DbContext(typeof(P0DbContext))]
-    [Migration("20200429180222_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200430012915_IntialCreate")]
+    partial class IntialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

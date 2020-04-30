@@ -14,5 +14,7 @@ namespace P0DatabaseApi
         [Key][ForeignKey("Product")]
         public int ProductId { get; set; }
         public int Quantity { get; set; }
+
+        public Inventory() { }
     }
 }

@@ -34,7 +34,7 @@ namespace P0DatabaseApi
         #endregion
 
         #region Constructors
-		internal Customer()
+		public Customer()
 		{ }
         #endregion
 

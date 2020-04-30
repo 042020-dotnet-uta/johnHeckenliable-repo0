@@ -20,13 +20,13 @@ namespace P0DatabaseApi
 
 		public DateTime OrderDateTime { get; set; }
 
-		public List<OrderDetails> ProductsOrdered { get; set; }
+		public virtual List<OrderDetails> ProductsOrdered { get; set; }
 
 		#endregion
 
 		#region Constructors
-		internal Order()
-		{ }
+		public Order()
+		{ ProductsOrdered = new List<OrderDetails>(); }
         #endregion
 
         #region Methods
