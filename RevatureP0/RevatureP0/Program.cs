@@ -4,71 +4,10 @@ namespace RevatureP0
 {
     class Program
     {
-        
         static void Main(string[] args)
         {
             var controller = new StoreApp();
             controller.StartApp();
-        }
-
-        private static int GetStoreSelection()
-        {
-            var selection = 0;
-
-            //Get list of stores
-            var stores = controller.GetStoreList();
-
-            for (int i = 0; i < stores.Length; i++)
-            {
-                Console.WriteLine("{0}. {1}", i+1, stores[i]);
-            }
-            do
-            {
-                Console.Write("Select store number to start shopping. ");
-
-                int.TryParse(ProcessInput(), out selection);
-            } while (!(selection >0 && selection < stores.Length));
-
-            return selection;
-        }
-
-        private static void ProcessUserLogin(int selection)
-        {
-            if(selection == 1)
-            {
-                LoginUser();
-            }
-            else
-            {
-                Console.WriteLine("User Account Creation.");
-            }
-        }
-        private static void LoginUser()
-        {
-            Console.Write("Enter user name: ");
-            var userName = ProcessInput();
-        }
-        private static void RegisterUser()
-        {
-            Console.Write("Enter first name: ");
-            var firstName = ProcessInput();
-            Console.Write("Enter last name: ");
-            var lastName = ProcessInput();
-            Console.Write("Enter phone number: ");
-            var phoneNumber = ProcessInput();
-        }
-
-        private static int GetUserLoginSelction()
-        {
-            var selection = 0;
-            do
-            {
-                Console.Write("Please enter 1 to log into an existing account or 2 to create a new account. ");
-
-                int.TryParse(ProcessInput(), out selection);
-            } while (!(selection == 1 || selection == 2));
-
-            return selection;
         }
     }
 }
