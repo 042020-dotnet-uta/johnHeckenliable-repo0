@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\P0DatabaseApi\P0DatabaseApi.csproj" />
+    <ProjectReference Include="..\StoreBackend\StoreBackend.csproj" />
   </ItemGroup>
 
 </Project>

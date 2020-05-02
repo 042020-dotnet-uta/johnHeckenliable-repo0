@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace P0DatabaseApi
+namespace StoreBackend_Api
 {
-    public class Customer
+    public class CustomerInfo
     {
 		#region Properties
-		[Key]
 		public int CustomerId { get; set; }
 
 		private string firstName;
@@ -34,11 +33,12 @@ namespace P0DatabaseApi
         #endregion
 
         #region Constructors
-		public Customer()
+		public CustomerInfo()
 		{ }
 
-		public Customer(string fName, string lName, string phoneNum)
+		public CustomerInfo(int ID, string fName, string lName, string phoneNum)
 		{
+			this.CustomerId = ID;
 			this.FirstName = fName;
 			this.LastName = lName;
 			this.PhoneNumber = phoneNum;

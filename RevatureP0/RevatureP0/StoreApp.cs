@@ -1,4 +1,4 @@
-﻿using P0DatabaseApi;
+﻿using StoreBackend_Api;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +8,9 @@ namespace RevatureP0
     class StoreApp
     {
         #region Private Fields
-        P0DbContext db = new P0DbContext();
+        StoreBackend db = new StoreBackend();
         const string _EXIT = "EXIT";
+
         #endregion
 
         #region Properties
@@ -27,13 +28,12 @@ namespace RevatureP0
             DisplayWelcomeScreen();
 
             ManageUserSection();
-            //Ask the user to select a store location (menu of n choices)
 
-            //var store = ProcessStoreSelection(selection);
+            ManageStoreSection();
 
             //Create a menu of options for that store
             //1. View available products
-            //selection = GetAvailableProducts(store);
+            
 
 
             //2. Add product to "cart"
@@ -54,6 +54,11 @@ namespace RevatureP0
             Console.WriteLine("***Welcome to THE store***");
         }
 
+        private void ManageMainMenu()
+        {
+
+        }
+
         #region User Login/Creation Methods
         private bool ManageUserSection()
         {
@@ -62,41 +67,46 @@ namespace RevatureP0
             //Ask the user to 1. Log in 2. create an account
             var selection = GetUserLoginSelction();
             //Process the user selection
-            var displayName = ProcessUserLogin(selection);
+            var customer = ProcessUserLogin(selection);
+            if (customer == null)
+            {
+                Console.WriteLine("Unable to find a matching customer account.");
+                LoginUser();
+            }
+
             //prompt user if there is an issue with account/creation
             //Go back to log in or creation???
-            DisplayWelcomeUser(displayName);
+            DisplayWelcomeUser(customer.FirstName);
 
             return success;
         }
 
-        private string ProcessUserLogin(int selection)
+        private CustomerInfo ProcessUserLogin(int selection)
         {
-            var displayName = string.Empty;
+            CustomerInfo cust = null;
             if (selection == 1)//1. verify the account
             {
-                displayName = LoginUser();
+                cust = LoginUser();
             }
             else//2. Create the user
             {
-                displayName = RegisterNewUser();
+                cust = RegisterNewUser();
             }
-            return displayName;
+            return cust;
         }
-        private string LoginUser()
+        private CustomerInfo LoginUser()
         {
-            var fullName = string.Empty;
-            Console.Write("Enter user name: ");
-            var userName = ProcessInput();
+            Console.Write("Enter first name: ");
+            var fName = ProcessInput();
+            Console.Write("Enter last name: ");
+            var lName = ProcessInput();
 
-            //retrieve the user information from the backend api(?)
-
-            return fullName;
+            //retrieve the user information from the backend api
+            var cust = db.GetCustomer(fName, lName);
+            return cust;
         }
-        private string RegisterNewUser()
+        private CustomerInfo RegisterNewUser()
         {
-            var fullName = string.Empty;
-
             Console.Write("Enter first name: ");
             var firstName = ProcessInput();
             Console.Write("Enter last name: ");
@@ -105,8 +115,8 @@ namespace RevatureP0
             var phoneNumber = ProcessInput();
 
             //Send this information to the backend api
-
-            return fullName;
+            var cust = db.CreateNewCustomer(firstName, lastName, phoneNumber);
+            return cust;
         }
         private int GetUserLoginSelction()
         {
@@ -127,31 +137,70 @@ namespace RevatureP0
         }
         #endregion
 
-        private int GetStoreSelection()
+        #region Store Selection/Info Methods
+
+        private bool ManageStoreSection()
         {
-            var selection = 0;
+            var success = true;
 
             //Get list of stores
             var stores = this.GetStoreList();
+            var selection = GetStoreSelection(stores);
+            var inventory = GetStoreInventory(stores[selection - 1]);
+            
+            DisplayStoreInventory(inventory);
 
+            return success;
+        }
+        private int GetStoreSelection(string[] stores)
+        {
+            var selection = 0;
+
+            //Ask the user to select a store location (menu of n choices)
             for (int i = 0; i < stores.Length; i++)
             {
                 Console.WriteLine("{0}. {1}", i + 1, stores[i]);
             }
             do
             {
-                Console.Write("Select store number to start shopping. ");
+                Console.Write("Select store number to get started. ");
 
                 int.TryParse(ProcessInput(), out selection);
-            } while (!(selection > 0 && selection < stores.Length));
+            } while (!(selection > 0 && selection <= stores.Length));
 
             return selection;
         }
-
         private string[] GetStoreList()
         {
-            return new string[0];
+            var stores = new string[]
+            {
+                "Seattle",
+                "Tacoma",
+                "Bellevue",
+            };
+            return stores;
         }
+
+        private string[,] GetStoreInventory(string storeLocation)
+        {
+            var inventory = new string[,] 
+            { 
+                { "Product1", "10" }, 
+                { "Product2", "15" }, 
+                { "Product3", "2" } 
+            };
+
+            return inventory;
+        }
+        private void DisplayStoreInventory(string[,] inventory)
+        {
+            for (int i = 0; i < inventory.GetLength(0); i++)
+            {
+                Console.WriteLine($"{i + 1}. {inventory[i, 0]} available quantity - {inventory[i, 1]}");
+            }
+        }
+
+        #endregion
 
         private string ProcessInput()
         {

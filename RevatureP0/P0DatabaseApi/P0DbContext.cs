@@ -43,16 +43,17 @@ namespace P0DatabaseApi
                 .HasKey(c => new { c.ProductId, c.StoreId });
         }
 
+        /*
         public void CreateSomeData()
         {
-            /*
+            
             CreateSomeStores();
             CreateSomeCustomers();
             CreateSomeProducts();
             CreateSomeStoreInventorys();
             CreateSomeOrderes();
             CreateSomeOrderDetails();
-            */
+            
         }
 
         public void QuerySomeData()
@@ -365,5 +366,6 @@ namespace P0DatabaseApi
             }
         }
         #endregion
+        */
     }
 }
