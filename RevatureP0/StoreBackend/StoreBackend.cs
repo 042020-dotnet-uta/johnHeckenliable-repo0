@@ -24,7 +24,7 @@ namespace StoreBackend_Api
         #endregion
 
         #region Public Methods
-        public CustomerInfo CreateNewCustomer(string fName, string lName, string phoneNum)
+        public CustomerInfo AddNewCustomer(string fName, string lName, string phoneNum)
         {
             var customer = new Customer(fName, lName, phoneNum);
             db.Add(customer);
@@ -32,7 +32,7 @@ namespace StoreBackend_Api
 
             return new CustomerInfo(customer.CustomerId, fName, lName, phoneNum);
         }
-        public CustomerInfo GetCustomer(string fName, string lName)
+        public CustomerInfo GetCustomerInfo(string fName, string lName)
         {
             //Find the user in the db
             var customer = (from cust in db.Customers
@@ -66,6 +66,20 @@ namespace StoreBackend_Api
                            }).ToList();
             return orders;
         }
+
+        public List<LocationInfo> GetAllLocations()
+        {
+            var locations = (from loc in db.Stores
+                            select new LocationInfo
+                            {
+                                StoreId = loc.StoreId,
+                                Location = loc.Location,
+                                AvailableProducts = GetAvailableProducts(loc.StoreId)
+                            }).ToList();
+
+            return locations;
+        }
+
         public List<OrderInfo> GetLocationOrderHistory(int storeId)
         {
             var orders = (from order in db.Orders
@@ -104,21 +118,6 @@ namespace StoreBackend_Api
 
             return orderInfo;
         }
-        public List<OrderLineItem> GetOrderLineItems(int orderId)
-        {
-            var lineItems = (from item in db.OrderDetails
-                               join prod in db.Products on item.ProductId equals prod.PoductId
-                               where item.OrderId == orderId
-                               select new OrderLineItem
-                               {
-                                   ProductId = item.ProductId,
-                                   ProductDescrition = prod.ProductDescription,
-                                   Quantity = item.Quantity,
-                                   PricePaid = item.PricePaid
-                               }).ToList();
-
-            return lineItems;
-        }
 
         public OrderInfo PlaceNewOrder(int storeId, int custId, int[,] items)
         {
@@ -140,8 +139,9 @@ namespace StoreBackend_Api
 
             return GetOrderInfo(order.OrderId);
         }
+        #endregion
 
-
+        #region Private Methods
         private OrderDetails CreateOrderDetailItem(int prodId, int quantity)
         {
             var item = new OrderDetails
@@ -153,6 +153,35 @@ namespace StoreBackend_Api
                              select prod.Price).FirstOrDefault()
             };
             return item;
+        }
+
+        private List<OrderLineItem> GetOrderLineItems(int orderId)
+        {
+            var lineItems = (from item in db.OrderDetails
+                             join prod in db.Products on item.ProductId equals prod.PoductId
+                             where item.OrderId == orderId
+                             select new OrderLineItem
+                             {
+                                 ProductId = item.ProductId,
+                                 ProductDescrition = prod.ProductDescription,
+                                 Quantity = item.Quantity,
+                                 PricePaid = item.PricePaid
+                             }).ToList();
+
+            return lineItems;
+        }
+        private List<InventoryItemInfo> GetAvailableProducts(int storeId)
+        {
+            var items = (from item in db.StoreInventories
+                         join prod in db.Products on item.ProductId equals prod.PoductId
+                         where item.StoreId == storeId
+                         select new InventoryItemInfo
+                         {
+                             ProductId = item.ProductId,
+                             Quantity = item.Quantity,
+                             ProductDescription = prod.ProductDescription
+                         }).ToList();
+            return items;
         }
         #endregion
     }

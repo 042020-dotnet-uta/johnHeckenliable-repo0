@@ -25,8 +25,10 @@ namespace P0DatabaseApi
         {
             //use this for SQLite
             if (!options.IsConfigured)
+            { 
                 options.UseLazyLoadingProxies()
                        .UseSqlite("Data Source=C:\\Revature_Repo\\p0_Data.db");
+            }
 
             //use this for localDb SSMS
             //if (!options.IsConfigured)

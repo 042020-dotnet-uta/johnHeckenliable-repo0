@@ -102,7 +102,7 @@ namespace RevatureP0
             var lName = ProcessInput();
 
             //retrieve the user information from the backend api
-            var cust = db.GetCustomer(fName, lName);
+            var cust = db.GetCustomerInfo(fName, lName);
             return cust;
         }
         private CustomerInfo RegisterNewUser()
@@ -115,7 +115,7 @@ namespace RevatureP0
             var phoneNumber = ProcessInput();
 
             //Send this information to the backend api
-            var cust = db.CreateNewCustomer(firstName, lastName, phoneNumber);
+            var cust = db.AddNewCustomer(firstName, lastName, phoneNumber);
             return cust;
         }
         private int GetUserLoginSelction()
