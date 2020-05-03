@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace BackendTests
+namespace P0Tests
 {
-    public class UnitTest1
+    public class StoreBackenf_Tests
     {
         [Fact]
         public void AddsCustomerToDb()
