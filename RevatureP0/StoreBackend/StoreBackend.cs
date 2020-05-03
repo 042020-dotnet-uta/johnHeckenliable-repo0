@@ -119,11 +119,19 @@ namespace StoreBackend_Api
             return orderInfo;
         }
 
-        public OrderInfo PlaceNewOrder(int storeId, int custId, int[,] items)
+        public OrderInfo PlaceNewOrder(int storeId, int custId, int[,] items, out string msg)
         {
             var detailItems = new List<OrderDetails>();
+            msg = string.Empty;
+
             for (int i = 0; i < items.GetLength(0); i++)
             {
+                if (!(CheckForEnoughInventory(storeId, items[i, 0], items[i, 1])))
+                {
+                    msg = $"Not enough inventory for product with ID {items[i, 0]}";
+                    return null;
+                }
+
                 var detail = CreateOrderDetailItem(items[i, 0], items[i, 1]);
                 detailItems.Add(detail);
             }
@@ -135,6 +143,10 @@ namespace StoreBackend_Api
                 ProductsOrdered = detailItems
             };
             db.Add(order);
+            foreach (var item in order.ProductsOrdered)
+            {
+                UpdateLocationQuantity(order.StoreId, item.ProductId, (item.Quantity *= -1));
+            }
             db.SaveChanges();
 
             return GetOrderInfo(order.OrderId);
@@ -154,6 +166,22 @@ namespace StoreBackend_Api
             };
             return item;
         }
+        private bool CheckForEnoughInventory(int storeId, int prodId, int quantity)
+        {
+            var inventory = (from inv in db.StoreInventories
+                             where inv.StoreId == storeId && inv.ProductId == prodId
+                             select inv).Take(1).FirstOrDefault();
+
+            return inventory.Quantity >= quantity;
+        }
+        private void UpdateLocationQuantity(int storeId, int prodId, int quatitiyUpdate)
+        {
+            var inventory = (from inv in db.StoreInventories
+                             where inv.StoreId == storeId && inv.ProductId == prodId
+                             select inv).Take(1).FirstOrDefault();
+
+            inventory.Quantity += quatitiyUpdate;
+        }
 
         private List<OrderLineItem> GetOrderLineItems(int orderId)
         {
@@ -167,7 +195,6 @@ namespace StoreBackend_Api
                                  Quantity = item.Quantity,
                                  PricePaid = item.PricePaid
                              }).ToList();
-
             return lineItems;
         }
         private List<InventoryItemInfo> GetAvailableProducts(int storeId)
