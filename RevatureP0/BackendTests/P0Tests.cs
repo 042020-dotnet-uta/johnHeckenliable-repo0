@@ -283,8 +283,8 @@ namespace P0Tests
 
                 var backend = new StoreBackend(context);
                 int[,] prods = new int[,] { { 1, 2 }, { 2, 5 } };
-                string msg;
-                orderId = backend.PlaceNewOrder(1, 1, prods, out msg).OrderId;
+                
+                orderId = backend.PlaceNewOrder(1, 1, prods).OrderId;
             }
             //Assert
             using (var context = new P0DbContext(options))
@@ -335,8 +335,8 @@ namespace P0Tests
 
                 var backend = new StoreBackend(context);
                 int[,] prods = new int[,] { { 1, 2 } };
-                string msg;
-                orderId = backend.PlaceNewOrder(1, 1, prods, out msg).OrderId;
+                
+                orderId = backend.PlaceNewOrder(1, 1, prods).OrderId;
             }
             //Assert
             using (var context = new P0DbContext(options))
@@ -350,54 +350,7 @@ namespace P0Tests
         }
 
         [Fact]
-        public void ReturnsMsgOnNegativeInventory()
-        {
-            //Arrange
-            var options = BuildInMemoryDb("ReturnsMessage");
-
-            //Act
-            using (var context = new P0DbContext(options))
-            {
-                CreateOneCustomer(context);
-                CreateTwoproducts(context);
-
-                var store = new Store
-                {
-                    StoreId = 1,
-                    Location = "Location1",
-                    AvailableProducts = new List<Inventory>
-                    {
-                        new Inventory
-                        {
-                            ProductId = 1,
-                            StoreId = 1,
-                            Quantity = 10
-                        },
-                        new Inventory
-                        {
-                            ProductId = 2,
-                            StoreId = 1,
-                            Quantity = 50
-                        }
-                    }
-                };
-                context.Add(store);
-                context.SaveChanges();
-            }
-            //Assert
-            using (var context = new P0DbContext(options))
-            {
-                var backend = new StoreBackend(context);
-                int[,] prods = new int[,] { { 1, 12 } };
-                string msg;
-                backend.PlaceNewOrder(1, 1, prods, out msg);
-
-                Assert.Equal("Not enough inventory for product with ID 1", msg);
-            }
-        }
-
-        [Fact]
-        public void CancelsOrderOnNegativeInventory()
+        public void ThrowsOnNegativeInventory()
         {
             //Arrange
             var options = BuildInMemoryDb("ThrowsException");
@@ -430,10 +383,59 @@ namespace P0Tests
                 };
                 context.Add(store);
                 context.SaveChanges();
+            }
+            //Assert
+            using (var context = new P0DbContext(options))
+            {
                 var backend = new StoreBackend(context);
                 int[,] prods = new int[,] { { 1, 12 } };
-                string msg;
-                backend.PlaceNewOrder(1, 1, prods, out msg);
+
+                Assert.Throws<ArgumentOutOfRangeException>(() => backend.PlaceNewOrder(1, 1, prods));
+            }
+        }
+
+        [Fact]
+        public void CancelsOrderOnNegativeInventory()
+        {
+            //Arrange
+            var options = BuildInMemoryDb("CancelsOrder");
+
+            //Act
+            using (var context = new P0DbContext(options))
+            {
+                CreateOneCustomer(context);
+                CreateTwoproducts(context);
+
+                var store = new Store
+                {
+                    StoreId = 1,
+                    Location = "Location1",
+                    AvailableProducts = new List<Inventory>
+                    {
+                        new Inventory
+                        {
+                            ProductId = 1,
+                            StoreId = 1,
+                            Quantity = 10
+                        },
+                        new Inventory
+                        {
+                            ProductId = 2,
+                            StoreId = 1,
+                            Quantity = 50
+                        }
+                    }
+                };
+                context.Add(store);
+                context.SaveChanges();
+                try
+                {
+                    var backend = new StoreBackend(context);
+                    int[,] prods = new int[,] { { 1, 12 } };
+
+                    backend.PlaceNewOrder(1, 1, prods);
+                }
+                catch { }
             }
             //Assert
             using (var context = new P0DbContext(options))

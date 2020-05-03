@@ -119,18 +119,14 @@ namespace StoreBackend_Api
             return orderInfo;
         }
 
-        public OrderInfo PlaceNewOrder(int storeId, int custId, int[,] items, out string msg)
+        public OrderInfo PlaceNewOrder(int storeId, int custId, int[,] items)
         {
             var detailItems = new List<OrderDetails>();
-            msg = string.Empty;
 
             for (int i = 0; i < items.GetLength(0); i++)
             {
                 if (!(CheckForEnoughInventory(storeId, items[i, 0], items[i, 1])))
-                {
-                    msg = $"Not enough inventory for product with ID {items[i, 0]}";
-                    return null;
-                }
+                    throw new ArgumentOutOfRangeException($"Not enough inventory for product with ID {items[i, 0]}");
 
                 var detail = CreateOrderDetailItem(items[i, 0], items[i, 1]);
                 detailItems.Add(detail);
