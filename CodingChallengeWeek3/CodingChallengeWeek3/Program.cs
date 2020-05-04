@@ -10,26 +10,26 @@ namespace CodingChallengeWeek3
             do
             {
                 DisplayMenu();
-                ProcessMainMenuInput();
+                var selection = ValidateMainMenuSelection();
+                ProcessMainMenuInput(selection);
             } while (true);
         }
-
+        /// <summary>
+        /// Will clear the console then display the 4 elements of the main menu
+        /// </summary>
         static void DisplayMenu()
         {
             Console.Clear();
-            Console.WriteLine("1. Is it even?");
+            Console.WriteLine("1. Is the number even?");
             Console.WriteLine("2. Multiplication table");
-            Console.WriteLine("3. Shuffle");
+            Console.WriteLine("3. Alternating Elements");
             Console.WriteLine("4. EXIT");
         }
-
-        static void ProcessMainMenuInput()
+        /// <summary>
+        /// Will start the appropriate selection
+        /// </summary>
+        static void ProcessMainMenuInput(int selection)
         {
-            var selection = 0;
-            while ((!int.TryParse(Console.ReadLine(), out selection)) && (selection >= 1 && selection <=4))
-            {
-                Console.WriteLine("Please enter 1 - 4.");
-            };
             switch (selection)
             {
                 case 1:
@@ -46,7 +46,22 @@ namespace CodingChallengeWeek3
                     break;
             }
         }
-
+        /// <summary>
+        /// Will validate that the user entered a number between 1 and 4
+        /// </summary>
+        /// <returns></returns>
+        private static int ValidateMainMenuSelection()
+        {
+            var selection = 0;
+            while ((!int.TryParse(Console.ReadLine(), out selection)) && (selection >= 1 && selection <= 4))
+            {
+                Console.WriteLine("Please enter 1 - 4.");
+            };
+            return selection;
+        }
+        /// <summary>
+        /// Starts the Is it Even
+        /// </summary>
         static void PlayIsItEven()
         {
             //Clear the console
@@ -58,7 +73,10 @@ namespace CodingChallengeWeek3
             DisplayOutput(output);
             PressAnyKey();
         }
-
+        /// <summary>
+        /// Starts the multiplication Table
+        /// Will check that the user inputs an int and loop until they do
+        /// </summary>
         static void PlayMultiplcationTable()
         {
             //Clear the console
@@ -75,6 +93,11 @@ namespace CodingChallengeWeek3
             DisplayOutput(output);
             PressAnyKey();
         }
+        /// <summary>
+        /// Starts the Alternating Elements
+        /// It will ask for 2 sets of 5 comma delimited values
+        /// It will lopp until the user inputs them
+        /// </summary>
         static void PlayShuffle()
         {
             //Clear the console
@@ -100,16 +123,28 @@ namespace CodingChallengeWeek3
             DisplayOutput(output);
             PressAnyKey();
         }
+        /// <summary>
+        /// Waits for the user to press any kety to return to the main menu
+        /// </summary>
         static void PressAnyKey()
         {
             Console.Write("Press any key to return to the main menu.");
             Console.ReadLine();
         }
+        /// <summary>
+        /// Will display the output with a new line added
+        /// </summary>
+        /// <param name="output"></param>
         static void DisplayOutput(string output)
         {
             Console.WriteLine("\n" + output);
         }
 
+        /// <summary>
+        /// Will check the input for an even number
+        /// </summary>
+        /// <param name="input">the user inout to check for an even number</param>
+        /// <returns></returns>
         public static string IsEven(string input)
         {
             var output = string.Empty;
@@ -131,6 +166,11 @@ namespace CodingChallengeWeek3
             //Return the formatted text
             return output;
         }
+        /// <summary>
+        /// Will create a display a multiplcation table for the number provided
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         public static string MultTable(int num)
         {
             var output = string.Empty;
@@ -148,7 +188,12 @@ namespace CodingChallengeWeek3
             //Return the formatted text
             return output;
         }
-
+        /// <summary>
+        /// Will create and display a string containing the 2 sets alternated
+        /// </summary>
+        /// <param name="a">the first set of 5 values</param>
+        /// <param name="b">the second set of 5 values</param>
+        /// <returns></returns>
         public static string Shuffle(string[] a, string[] b)
         {
             var output = string.Empty;
