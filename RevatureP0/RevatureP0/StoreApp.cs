@@ -9,8 +9,6 @@ namespace RevatureP0
     {
         #region Private Fields
         StoreBackend db = new StoreBackend();
-        const string _EXIT = "EXIT";
-
         #endregion
 
         #region Properties
@@ -24,12 +22,19 @@ namespace RevatureP0
         #region Public Methods
         public void StartApp()
         {
-            //Welcome the user
-            DisplayWelcomeScreen();
+            int selection;
+            var main = new MainMenu();
+            main.PrintMainMenu();
 
-            ManageUserSection();
+            int.TryParse(Console.ReadLine(), out selection);
 
-            ManageStoreSection();
+            var ui = main.ProcessSelection(selection);
+
+            ui.PrintMainMenu();
+
+            //ManageUserSection();
+
+            //ManageStoreSection();
 
             //Create a menu of options for that store
             //1. View available products
@@ -51,7 +56,9 @@ namespace RevatureP0
         #region Private Methods
         private void DisplayWelcomeScreen()
         {
-            Console.WriteLine("***Welcome to THE store***");
+            string s = "***Welcome to THE store***";
+            Console.SetCursorPosition((Console.WindowWidth - s.Length) / 2, Console.CursorTop);
+            Console.WriteLine(s);
         }
 
         private void ManageMainMenu()
@@ -96,26 +103,24 @@ namespace RevatureP0
         }
         private CustomerInfo LoginUser()
         {
-            Console.Write("Enter first name: ");
-            var fName = ProcessInput();
-            Console.Write("Enter last name: ");
-            var lName = ProcessInput();
+            Console.Write("Enter email address: ");
+            var email = utils.ProcessInput();
 
             //retrieve the user information from the backend api
-            var cust = db.GetCustomerInfo(fName, lName);
+            var cust = db.GetCustomerInfo(email);
             return cust;
         }
         private CustomerInfo RegisterNewUser()
         {
             Console.Write("Enter first name: ");
-            var firstName = ProcessInput();
+            var firstName = utils.ProcessInput();
             Console.Write("Enter last name: ");
-            var lastName = ProcessInput();
-            Console.Write("Enter phone number: ");
-            var phoneNumber = ProcessInput();
+            var lastName = utils.ProcessInput();
+            Console.Write("Enter email address: ");
+            var email = utils.ProcessInput();
 
             //Send this information to the backend api
-            var cust = db.AddNewCustomer(firstName, lastName, phoneNumber);
+            var cust = db.AddNewCustomer(firstName, lastName, email);
             return cust;
         }
         private int GetUserLoginSelction()
@@ -125,7 +130,7 @@ namespace RevatureP0
             {
                 Console.Write("Please enter 1 to log into an existing account or 2 to create a new account. ");
 
-                int.TryParse(ProcessInput(), out selection);
+                int.TryParse(utils.ProcessInput(), out selection);
             } while (!(selection == 1 || selection == 2));
 
             return selection;
@@ -165,7 +170,7 @@ namespace RevatureP0
             {
                 Console.Write("Select store number to get started. ");
 
-                int.TryParse(ProcessInput(), out selection);
+                int.TryParse(utils.ProcessInput(), out selection);
             } while (!(selection > 0 && selection <= stores.Length));
 
             return selection;
@@ -202,19 +207,7 @@ namespace RevatureP0
 
         #endregion
 
-        private string ProcessInput()
-        {
-            var input = Console.ReadLine();
-            CheckForExit(input);
-            return input;
-        }
-        private void CheckForExit(string input)
-        {
-            if (input.ToUpper() == _EXIT)
-            {
-                System.Environment.Exit(0);
-            }
-        }
+        
         #endregion
     }
 }

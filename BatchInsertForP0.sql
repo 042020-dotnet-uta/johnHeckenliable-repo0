@@ -17,15 +17,15 @@ values(3, 'Renton');
 
 --INSERT NEW TEST DATA INTO CUSTOMERS
 insert into Customers
-VALUES(1, 'John', 'Doe', '555-123-4567');
+VALUES(1, 'John', 'Doe', 'JohnDoe@email.com');
 insert into Customers
-VALUES(2, 'Jane', 'Doe', '555-123-4567');
+VALUES(2, 'Jane', 'Doe', 'JaneDoe@email.com');
 insert into Customers
-VALUES(3, 'Don', 'Johnson', '555-222-9999');
+VALUES(3, 'Don', 'Johnson', 'DonJon@email.com');
 insert into Customers
-VALUES(4, 'April', 'Showers', '555-777-4567');
+VALUES(4, 'April', 'Showers', 'a_showers@email.com');
 insert into Customers
-VALUES(5, 'David', 'Smith', '555-884-3695');
+VALUES(5, 'David', 'Smith', 'DaveSmith@email.com');
 
 --INSERT NEW TEST DATA INTO PRODUCTS
 INSERT INTO Products
@@ -61,9 +61,9 @@ INSERT INTO StoreInventories
 VALUES(2, 4, 200);
 INSERT INTO StoreInventories
 VALUES(2, 5, 200);
-
 INSERT INTO StoreInventories
 VALUES(3, 1, 200);
+
 --INSERT INTO StoreInventories
 --VALUES(3, 2, 200);
 INSERT INTO StoreInventories

@@ -8,21 +8,21 @@ using Xunit;
 
 namespace P0Tests
 {
-    public class StoreBackenf_Tests
+    public class StoreBackend_Tests
     {
         [Fact]
         public void AddsCustomerToDb()
         {
             //Arrange
             var options = BuildInMemoryDb("AddsCustomer");
-            string fName = "Bob", lName = "Dole", pNum = "555-555-5555";
+            string fName = "Bob", lName = "Dole", email = "bdole@email.com";
             CustomerInfo customerInfo = null;
 
             //Act
             using (var context = new P0DbContext(options))
             {
                 var backend = new StoreBackend(context);
-                customerInfo = backend.AddNewCustomer(fName, lName, pNum);
+                customerInfo = backend.AddNewCustomer(fName, lName, email);
             }
             //Assert
             using (var context = new P0DbContext(options))
@@ -34,16 +34,16 @@ namespace P0Tests
                 Assert.Equal(customer.CustomerId, customerInfo.CustomerId);
                 Assert.Equal(fName, customer.FirstName);
                 Assert.Equal(lName, customer.LastName);
-                Assert.Equal(pNum, customer.PhoneNumber);
+                Assert.Equal(email, customer.Email);
             }
         }
 
         [Fact]
-        public void GetsCustomerByName()
+        public void GetsCustomerByEmail()
         {
             //Arrange
             var options = BuildInMemoryDb("GetsCustomer");
-            string fName = "Bob", lName = "Dole", pNum = "555-555-5555";
+            string fName = "Bob", lName = "Dole", email = "bdole@email.com";
 
             //Act
             using (var context = new P0DbContext(options))
@@ -52,7 +52,7 @@ namespace P0Tests
                 {
                     FirstName = fName,
                     LastName = lName,
-                    PhoneNumber = pNum
+                    Email = email
                 };
                 context.Add(customer);
                 context.SaveChanges();
@@ -61,11 +61,11 @@ namespace P0Tests
             using (var context = new P0DbContext(options))
             {
                 var backend = new StoreBackend(context);
-                var customerInfo = backend.GetCustomerInfo(fName, lName);
+                var customerInfo = backend.GetCustomerInfo(email);
 
                 Assert.Equal(fName, customerInfo.FirstName);
                 Assert.Equal(lName, customerInfo.LastName);
-                Assert.Equal(pNum, customerInfo.PhoneNumber);
+                Assert.Equal(email, customerInfo.Email);
             }
         }
 
@@ -454,7 +454,7 @@ namespace P0Tests
                 CustomerId = 1,
                 FirstName = "Jim",
                 LastName = "Bob",
-                PhoneNumber = "555-555-5555"
+                Email = "jimmy@email.com"
             };
             context.Add(customer);
             context.SaveChanges();

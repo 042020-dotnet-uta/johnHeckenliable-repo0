@@ -32,20 +32,52 @@ namespace StoreBackend_Api
 
             return new CustomerInfo(customer.CustomerId, fName, lName, phoneNum);
         }
-        public CustomerInfo GetCustomerInfo(string fName, string lName)
+        public CustomerInfo GetCustomerInfo(string email)
         {
             //Find the user in the db
             var customer = (from cust in db.Customers
-                        where cust.FirstName == fName && cust.LastName == lName
+                        where cust.Email == email
                         select new CustomerInfo 
                         { 
                             CustomerId = cust.CustomerId,
                             FirstName = cust.FirstName,
                             LastName = cust.LastName,
-                            PhoneNumber = cust.PhoneNumber
+                            Email = cust.Email
                         }).Take(1).FirstOrDefault();
 
             return customer;
+        }
+
+        public List<CustomerInfo> SearchCustomersByFirstName(string fName)
+        {
+            //Find the user in the db
+            var customers = (from cust in db.Customers
+                            where cust.FirstName == fName
+                            select new CustomerInfo
+                            {
+                                CustomerId = cust.CustomerId,
+                                FirstName = cust.FirstName,
+                                LastName = cust.LastName,
+                                Email = cust.Email
+                            }).ToList();
+
+            return customers;
+        }
+
+        public List<CustomerInfo> SearchCustomersByLastName(string lName)
+        {
+            //Find the user in the db
+            var customers = (from cust in db.Customers
+                             where cust.LastName == lName
+                             select new CustomerInfo
+                             {
+                                 CustomerId = cust.CustomerId,
+                                 FirstName = cust.FirstName,
+                                 LastName = cust.LastName,
+                                 Email = cust.Email
+                             }).ToList();
+
+            return customers;
         }
 
         public List<OrderInfo> GetCustomerOrderHistory(int custId)

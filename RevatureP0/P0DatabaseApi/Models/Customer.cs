@@ -25,11 +25,11 @@ namespace P0DatabaseApi
 			set { lastName = value; }
 		}
 
-		private string phoneNumber;
-		public string PhoneNumber
+		private string email;
+		public string Email
 		{
-			get { return phoneNumber; }
-			set { phoneNumber = value; }
+			get { return email; }
+			set { email = value; }
 		}
         #endregion
 
@@ -37,11 +37,11 @@ namespace P0DatabaseApi
 		public Customer()
 		{ }
 
-		public Customer(string fName, string lName, string phoneNum)
+		public Customer(string fName, string lName, string email)
 		{
 			this.FirstName = fName;
 			this.LastName = lName;
-			this.PhoneNumber = phoneNum;
+			this.email = email;
 		}
         #endregion
 

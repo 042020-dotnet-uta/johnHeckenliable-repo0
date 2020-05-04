@@ -24,11 +24,11 @@ namespace StoreBackend_Api
 			set { lastName = value; }
 		}
 
-		private string phoneNumber;
-		public string PhoneNumber
+		private string email;
+		public string Email
 		{
-			get { return phoneNumber; }
-			set { phoneNumber = value; }
+			get { return email; }
+			set { email = value; }
 		}
         #endregion
 
@@ -36,12 +36,12 @@ namespace StoreBackend_Api
 		public CustomerInfo()
 		{ }
 
-		public CustomerInfo(int ID, string fName, string lName, string phoneNum)
+		public CustomerInfo(int ID, string fName, string lName, string email)
 		{
 			this.CustomerId = ID;
 			this.FirstName = fName;
 			this.LastName = lName;
-			this.PhoneNumber = phoneNum;
+			this.email = email;
 		}
         #endregion
 

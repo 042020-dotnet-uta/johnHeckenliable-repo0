@@ -9,8 +9,8 @@ using P0DatabaseApi;
 namespace P0DatabaseApi.Migrations
 {
     [DbContext(typeof(P0DbContext))]
-    [Migration("20200430012915_IntialCreate")]
-    partial class IntialCreate
+    [Migration("20200503225330_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,13 +24,13 @@ namespace P0DatabaseApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
                     b.HasKey("CustomerId");
