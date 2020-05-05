@@ -6,7 +6,11 @@ namespace RevatureP0
 {
     public class AdminUI : IInterface
     {
-        public void PrintMainMenu()
+        public bool Run()
+        {
+            return false;
+        }
+        private void PrintMainMenu()
         {
             Console.Clear();
             PrintTitle();
@@ -15,7 +19,7 @@ namespace RevatureP0
             Console.WriteLine("2. Location Information.");
         }
 
-        public void PrintTitle()
+        private void PrintTitle()
         {
             Console.WriteLine("******Admistration Portal******");
         }

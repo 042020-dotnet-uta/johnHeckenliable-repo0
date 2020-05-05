@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevatureP0", "RevatureP0\RevatureP0.csproj", "{C0FD174E-D0FC-4144-81D9-5C00B6987441}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P0DatabaseApi", "P0DatabaseApi\P0DatabaseApi.csproj", "{67149C62-3366-4CFD-A874-27BECC6349C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P0DbContext", "P0DatabaseApi\P0DbContext.csproj", "{67149C62-3366-4CFD-A874-27BECC6349C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreBackend", "StoreBackend\StoreBackend.csproj", "{151AFA4E-FE6C-4E67-A905-1C919CBB53AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreBackend", "StoreBackend\StoreBackend.csproj", "{151AFA4E-FE6C-4E67-A905-1C919CBB53AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P0Tests", "BackendTests\P0Tests.csproj", "{A7569F46-0CA6-4A3B-9522-F6F248C412EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P0Tests", "BackendTests\P0Tests.csproj", "{A7569F46-0CA6-4A3B-9522-F6F248C412EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

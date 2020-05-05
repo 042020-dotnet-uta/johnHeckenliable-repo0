@@ -200,6 +200,7 @@ namespace CodingChallengeWeek3
             //Loop through the length of the arrays
             for (int i = 0; i < a.Length; i++)
             {
+                //add the value at i from both arrays to the output string
                 output += $"{a[i]},{b[i]},";
             }
             output = output.TrimEnd(',');

@@ -6,7 +6,6 @@ namespace RevatureP0
 {
     interface IInterface
     {
-        void PrintTitle();
-        void PrintMainMenu();
+        bool Run();
     }
 }

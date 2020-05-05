@@ -17,15 +17,15 @@ values(3, 'Renton');
 
 --INSERT NEW TEST DATA INTO CUSTOMERS
 insert into Customers
-VALUES(1, 'John', 'Doe', 'JohnDoe@email.com');
+VALUES(1, 'John', 'Doe', 'johndoe@email.com');
 insert into Customers
-VALUES(2, 'Jane', 'Doe', 'JaneDoe@email.com');
+VALUES(2, 'Jane', 'Doe', 'janedoe@email.com');
 insert into Customers
-VALUES(3, 'Don', 'Johnson', 'DonJon@email.com');
+VALUES(3, 'Don', 'Johnson', 'donjon@email.com');
 insert into Customers
 VALUES(4, 'April', 'Showers', 'a_showers@email.com');
 insert into Customers
-VALUES(5, 'David', 'Smith', 'DaveSmith@email.com');
+VALUES(5, 'David', 'Smith', 'davesmith@email.com');
 
 --INSERT NEW TEST DATA INTO PRODUCTS
 INSERT INTO Products

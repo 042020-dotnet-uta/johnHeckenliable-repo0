@@ -24,19 +24,20 @@ namespace StoreBackend_Api
         #endregion
 
         #region Public Methods
-        public CustomerInfo AddNewCustomer(string fName, string lName, string phoneNum)
+        public CustomerInfo AddNewCustomer(string fName, string lName, string email)
         {
-            var customer = new Customer(fName, lName, phoneNum);
+            email = email.ToLower();
+            var customer = new Customer(fName, lName, email);
             db.Add(customer);
             db.SaveChanges();
 
-            return new CustomerInfo(customer.CustomerId, fName, lName, phoneNum);
+            return new CustomerInfo(customer.CustomerId, fName, lName, email);
         }
         public CustomerInfo GetCustomerInfo(string email)
         {
             //Find the user in the db
             var customer = (from cust in db.Customers
-                        where cust.Email == email
+                        where cust.Email == email.ToLower()
                         select new CustomerInfo 
                         { 
                             CustomerId = cust.CustomerId,
@@ -52,7 +53,7 @@ namespace StoreBackend_Api
         {
             //Find the user in the db
             var customers = (from cust in db.Customers
-                            where cust.FirstName == fName
+                            where cust.FirstName.ToLower() == fName.ToLower()
                             select new CustomerInfo
                             {
                                 CustomerId = cust.CustomerId,
@@ -68,7 +69,7 @@ namespace StoreBackend_Api
         {
             //Find the user in the db
             var customers = (from cust in db.Customers
-                             where cust.LastName == lName
+                             where cust.LastName.ToLower() == lName.ToLower()
                              select new CustomerInfo
                              {
                                  CustomerId = cust.CustomerId,
@@ -94,8 +95,17 @@ namespace StoreBackend_Api
                                OrderDate = order.OrderDateTime,
                                StoreId = order.StoreId,
                                StoreLocation = store.Location,
-                               LineItems = GetOrderLineItems(order.OrderId)
-                           }).ToList();
+                               LineItems = (from item in db.OrderDetails
+                                            join prod in db.Products on item.ProductId equals prod.PoductId
+                                            where item.OrderId == order.OrderId
+                                            select new OrderLineItem
+                                            {
+                                                ProductId = item.ProductId,
+                                                ProductDescrition = prod.ProductDescription,
+                                                Quantity = item.Quantity,
+                                                PricePaid = item.PricePaid
+                                            }).ToList()//GetOrderLineItems(order.OrderId)
+        }).ToList();
             return orders;
         }
 
@@ -106,7 +116,16 @@ namespace StoreBackend_Api
                             {
                                 StoreId = loc.StoreId,
                                 Location = loc.Location,
-                                AvailableProducts = GetAvailableProducts(loc.StoreId)
+                                AvailableProducts = (from item in db.StoreInventories
+                                                     join prod in db.Products on item.ProductId equals prod.PoductId
+                                                     where item.StoreId == loc.StoreId
+                                                     select new InventoryItemInfo
+                                                     {
+                                                         ProductId = item.ProductId,
+                                                         Quantity = item.Quantity,
+                                                         ProductDescription = prod.ProductDescription,
+                                                         Price = prod.Price
+                                                     }).ToList()//GetAvailableProducts(loc.StoreId)
                             }).ToList();
 
             return locations;
@@ -126,8 +145,17 @@ namespace StoreBackend_Api
                               OrderDate = order.OrderDateTime,
                               StoreId = order.StoreId,
                               StoreLocation = store.Location,
-                              LineItems = GetOrderLineItems(order.OrderId)
-                          }).ToList();
+                              LineItems = (from item in db.OrderDetails
+                                           join prod in db.Products on item.ProductId equals prod.PoductId
+                                           where item.OrderId == order.OrderId
+                                           select new OrderLineItem
+                                           {
+                                               ProductId = item.ProductId,
+                                               ProductDescrition = prod.ProductDescription,
+                                               Quantity = item.Quantity,
+                                               PricePaid = item.PricePaid
+                                           }).ToList()//GetOrderLineItems(order.OrderId)
+        }).ToList();
             return orders;
         }
 
@@ -145,22 +173,31 @@ namespace StoreBackend_Api
                              OrderDate = order.OrderDateTime,
                              StoreId = order.StoreId,
                              StoreLocation = store.Location,
-                             LineItems = GetOrderLineItems(order.OrderId)
-                         }).Take(1).FirstOrDefault();
+                             LineItems = (from item in db.OrderDetails
+                                          join prod in db.Products on item.ProductId equals prod.PoductId
+                                          where item.OrderId == order.OrderId
+                                          select new OrderLineItem
+                                          {
+                                              ProductId = item.ProductId,
+                                              ProductDescrition = prod.ProductDescription,
+                                              Quantity = item.Quantity,
+                                              PricePaid = item.PricePaid
+                                          }).ToList()//GetOrderLineItems(order.OrderId)
+        }).Take(1).FirstOrDefault();
 
             return orderInfo;
         }
 
-        public OrderInfo PlaceNewOrder(int storeId, int custId, int[,] items)
+        public OrderInfo PlaceNewOrder(int storeId, int custId, List<ProductQuantity> items)
         {
             var detailItems = new List<OrderDetails>();
 
-            for (int i = 0; i < items.GetLength(0); i++)
+            foreach (var item in items)
             {
-                if (!(CheckForEnoughInventory(storeId, items[i, 0], items[i, 1])))
-                    throw new ArgumentOutOfRangeException($"Not enough inventory for product with ID {items[i, 0]}");
+                if (!(CheckForEnoughInventory(storeId, item.ProductId, item.Quantity)))
+                    throw new ArgumentOutOfRangeException($"Not enough inventory for product with ID {item.ProductId}");
 
-                var detail = CreateOrderDetailItem(items[i, 0], items[i, 1]);
+                var detail = CreateOrderDetailItem(item.ProductId, item.Quantity);
                 detailItems.Add(detail);
             }
             var order = new Order
@@ -173,7 +210,7 @@ namespace StoreBackend_Api
             db.Add(order);
             foreach (var item in order.ProductsOrdered)
             {
-                UpdateLocationQuantity(order.StoreId, item.ProductId, (item.Quantity *= -1));
+                UpdateLocationQuantity(order.StoreId, item.ProductId, (item.Quantity * -1));
             }
             db.SaveChanges();
 
@@ -211,7 +248,7 @@ namespace StoreBackend_Api
             inventory.Quantity += quatitiyUpdate;
         }
 
-        private List<OrderLineItem> GetOrderLineItems(int orderId)
+        private List<OrderLineItem> ttGetOrderLineItems(int orderId)
         {
             var lineItems = (from item in db.OrderDetails
                              join prod in db.Products on item.ProductId equals prod.PoductId
@@ -239,5 +276,10 @@ namespace StoreBackend_Api
             return items;
         }
         #endregion
+    }
+    public struct ProductQuantity
+    {
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
     }
 }

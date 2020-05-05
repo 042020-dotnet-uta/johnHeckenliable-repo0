@@ -282,7 +282,19 @@ namespace P0Tests
                 context.SaveChanges();
 
                 var backend = new StoreBackend(context);
-                int[,] prods = new int[,] { { 1, 2 }, { 2, 5 } };
+                var prods = new List<ProductQuantity>()
+                {
+                    new ProductQuantity()
+                    {
+                        ProductId = 1,
+                        Quantity = 2
+                    },
+                    new ProductQuantity()
+                    {
+                        ProductId=  2,
+                        Quantity=  5
+                    }
+                };
                 
                 orderId = backend.PlaceNewOrder(1, 1, prods).OrderId;
             }
@@ -334,8 +346,15 @@ namespace P0Tests
                 context.SaveChanges();
 
                 var backend = new StoreBackend(context);
-                int[,] prods = new int[,] { { 1, 2 } };
-                
+                var prods = new List<ProductQuantity>()
+                {
+                    new ProductQuantity()
+                    {
+                        ProductId = 1,
+                        Quantity = 2
+                    }
+                };
+
                 orderId = backend.PlaceNewOrder(1, 1, prods).OrderId;
             }
             //Assert
@@ -388,7 +407,14 @@ namespace P0Tests
             using (var context = new P0DbContext(options))
             {
                 var backend = new StoreBackend(context);
-                int[,] prods = new int[,] { { 1, 12 } };
+                var prods = new List<ProductQuantity>()
+                {
+                    new ProductQuantity()
+                    {
+                        ProductId = 1,
+                        Quantity = 12
+                    }
+                };
 
                 Assert.Throws<ArgumentOutOfRangeException>(() => backend.PlaceNewOrder(1, 1, prods));
             }
@@ -431,7 +457,14 @@ namespace P0Tests
                 try
                 {
                     var backend = new StoreBackend(context);
-                    int[,] prods = new int[,] { { 1, 12 } };
+                    var prods = new List<ProductQuantity>()
+                {
+                    new ProductQuantity()
+                    {
+                        ProductId = 1,
+                        Quantity = 12
+                    }
+                };
 
                     backend.PlaceNewOrder(1, 1, prods);
                 }

@@ -8,7 +8,6 @@ namespace RevatureP0
     class StoreApp
     {
         #region Private Fields
-        StoreBackend db = new StoreBackend();
         #endregion
 
         #region Properties
@@ -22,15 +21,17 @@ namespace RevatureP0
         #region Public Methods
         public void StartApp()
         {
-            int selection;
-            var main = new MainMenu();
-            main.PrintMainMenu();
+            IInterface ui;
+            do
+            {
+                int selection;
+                do
+                {
+                    PrintMainMenu();
+                } while (!(int.TryParse(Console.ReadLine(), out selection)) && (selection != 1 || selection !=2));
 
-            int.TryParse(Console.ReadLine(), out selection);
-
-            var ui = main.ProcessSelection(selection);
-
-            ui.PrintMainMenu();
+                ui = ProcessSelection(selection);
+            } while (ui.Run());
 
             //ManageUserSection();
 
@@ -53,6 +54,32 @@ namespace RevatureP0
         }
         #endregion
 
+        public void PrintMainMenu()
+        {
+            Console.Clear();
+            //PrintTitle();
+            Console.WriteLine("Choose user type:\n");
+            Console.WriteLine("1. Admin.");
+            Console.WriteLine("2. Customer.");
+        }
+
+        public IInterface ProcessSelection(int selection)
+        {
+            IInterface ui = null;
+            switch (selection)
+            {
+                case 1:
+                    ui = new AdminUI();
+                    break;
+                case 2:
+                    ui = new CustomerUI();
+                    break;
+                default:
+                    break;
+            }
+            return ui;
+        }
+
         #region Private Methods
         private void DisplayWelcomeScreen()
         {
@@ -70,24 +97,26 @@ namespace RevatureP0
         private bool ManageUserSection()
         {
             var success = true;
+            /*
 
             //Ask the user to 1. Log in 2. create an account
             var selection = GetUserLoginSelction();
             //Process the user selection
-            var customer = ProcessUserLogin(selection);
+           // var customer = ProcessUserLogin(selection);
             if (customer == null)
             {
                 Console.WriteLine("Unable to find a matching customer account.");
-                LoginUser();
+                //LoginUser();
             }
 
             //prompt user if there is an issue with account/creation
             //Go back to log in or creation???
             DisplayWelcomeUser(customer.FirstName);
 
+            */
             return success;
         }
-
+        /*
         private CustomerInfo ProcessUserLogin(int selection)
         {
             CustomerInfo cust = null;
@@ -101,28 +130,7 @@ namespace RevatureP0
             }
             return cust;
         }
-        private CustomerInfo LoginUser()
-        {
-            Console.Write("Enter email address: ");
-            var email = utils.ProcessInput();
-
-            //retrieve the user information from the backend api
-            var cust = db.GetCustomerInfo(email);
-            return cust;
-        }
-        private CustomerInfo RegisterNewUser()
-        {
-            Console.Write("Enter first name: ");
-            var firstName = utils.ProcessInput();
-            Console.Write("Enter last name: ");
-            var lastName = utils.ProcessInput();
-            Console.Write("Enter email address: ");
-            var email = utils.ProcessInput();
-
-            //Send this information to the backend api
-            var cust = db.AddNewCustomer(firstName, lastName, email);
-            return cust;
-        }
+        */
         private int GetUserLoginSelction()
         {
             var selection = 0;
