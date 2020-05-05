@@ -247,7 +247,7 @@ namespace StoreBackend_Api
 
             inventory.Quantity += quatitiyUpdate;
         }
-
+        /*
         private List<OrderLineItem> ttGetOrderLineItems(int orderId)
         {
             var lineItems = (from item in db.OrderDetails
@@ -275,6 +275,7 @@ namespace StoreBackend_Api
                          }).ToList();
             return items;
         }
+        */
         #endregion
     }
     public struct ProductQuantity

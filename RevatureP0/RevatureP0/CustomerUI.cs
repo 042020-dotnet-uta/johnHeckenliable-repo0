@@ -179,7 +179,7 @@ namespace RevatureP0
             //Display the products for that location
             Console.Clear();
             Console.WriteLine($"Inventory for location {locations[selection - 1].Location}\n");
-            var ii = 1;
+            
             /*
             if (null == locations[selection - 1].AvailableProducts || locations[selection - 1].AvailableProducts.Count == 0)
             {
