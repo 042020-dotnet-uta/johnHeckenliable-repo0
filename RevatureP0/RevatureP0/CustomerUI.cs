@@ -45,7 +45,7 @@ namespace RevatureP0
             Console.Clear();
             PrintTitle();
 
-            Console.WriteLine("1. Login.");
+            Console.WriteLine("\n1. Login.");
             Console.WriteLine("2. Create new Account.");
         }
 
@@ -54,14 +54,14 @@ namespace RevatureP0
             Console.Clear();
             PrintTitle();
 
-            Console.WriteLine("1. View Order History.");
+            Console.WriteLine("\n1. View Order History.");
             Console.WriteLine("2. Place a New Order.");
             Console.WriteLine("3. Return to main menu.");
         }
 
         private void PrintTitle()
         {
-            Console.WriteLine("Choose something.\n");
+            //Console.WriteLine("Choose something.\n");
         }
 
         private bool LoginUser()
