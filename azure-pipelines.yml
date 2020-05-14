@@ -21,15 +21,13 @@ stages: # This stage will build the project
     jobs:
       - job: 'build'
         steps:
-          - script: dotnet build 'pipelineMvcDemo/pipelineMvcDemo.csproj'
+          - script: dotnet build 'RevatureP0/RevatureP0.sln'
       - job: 'test' # this stage will run the tests
         dependsOn: 'build' # requires that build succeed
         steps:
-          - script: dotnet test 'pipelineMvcDemo/Tests/Tests.csproj
+          - script: dotnet test 'RevatureP0/BackendTests/P0Tests.csproj
       - job: 'publish' # this stage will publish the app
         dependsOn: 'test' # requires the tests to pass
-        steps:
-          - script: 'dotnet publish'
 
 # Gives it a unique name 
 name: '$(date:yyyMMdd)$(rev:rr)'
