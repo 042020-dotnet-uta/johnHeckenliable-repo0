@@ -1,0 +1,36 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# What branch we are watching
+trigger:
+  - 'master'
+
+# the type of VM you are going to use
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+# Watch for PRs
+pr: none
+
+# the sequential steps to follow - build, run, test, deploy, etc...
+stages: # This stage will build the project
+  - stage:
+    jobs:
+      - job: 'build'
+        steps:
+          - script: dotnet build 'pipelineMvcDemo/pipelineMvcDemo.csproj'
+      - job: 'test' # this stage will run the tests
+        dependsOn: 'build' # requires that build succeed
+        steps:
+          - script: dotnet test 'pipelineMvcDemo/Tests/Tests.csproj
+      - job: 'publish' # this stage will publish the app
+        dependsOn: 'test' # requires the tests to pass
+        steps:
+          - script: 'dotnet publish'
+
+# Gives it a unique name 
+name: '$(date:yyyMMdd)$(rev:rr)'
+
