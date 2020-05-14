@@ -26,8 +26,6 @@ stages: # This stage will build the project
         dependsOn: 'build' # requires that build succeed
         steps:
           - script: dotnet test
-      - job: 'publish' # this stage will publish the app
-        dependsOn: 'test' # requires the tests to pass
 
 # Gives it a unique name 
 name: '$(date:yyyMMdd)$(rev:rr)'
