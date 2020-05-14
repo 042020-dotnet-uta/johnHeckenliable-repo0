@@ -25,7 +25,7 @@ stages: # This stage will build the project
       - job: 'test' # this stage will run the tests
         dependsOn: 'build' # requires that build succeed
         steps:
-          - script: dotnet test
+          - script: dotnet test 'RevatureP0/BackendTests/P0Tests.csproj
 
 # Gives it a unique name 
 name: '$(date:yyyMMdd)$(rev:rr)'
